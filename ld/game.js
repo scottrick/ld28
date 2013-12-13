@@ -74,13 +74,15 @@ Game.run = (function() {
 })();
 
 Game.draw = function() {
-	context.clearRect(0, 0, canvas.width, canvas.height);
+	// context.clearRect(0, 0, canvas.width, canvas.height);
 	
-	context.fillStyle = "#a00"
+	context.fillStyle = "#000"
 	context.fillRect(0, 0, canvas.width, canvas.height);
 
+	// context.drawImage(image, 0, 0, image.width, image.height, 0, 0, 400, 300);
+
 	context.font = "24px Arial";
-	context.fillStyle = "#000"
+	context.fillStyle = "#aaa"
 	context.fillText("" + Game.time.toFixed(2), 24, 48);
 };
 
@@ -111,6 +113,11 @@ Game.handleKeyUp = function(key) {
 		Game.toggleSlowMotion();
 	}
 }
+
+// var image = document.getElementById("imageId");
+
+// var audio = document.getElementById("audioId");
+// audio.play();
 
 //start the loop!
 Game._intervalId = setInterval(Game.run, 0);
