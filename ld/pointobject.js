@@ -10,7 +10,7 @@ function PointObject (position, velocity, radius) {
     this.radius = radius;
 }
 
-PointObject.prototype.update = function(deltaTime) {
+PointObject.prototype.update = function(deltaTime, scene) {
 	if (this.velocity != null) {
 		this.position.x += this.velocity.x * deltaTime;
 		this.position.y += this.velocity.y * deltaTime;

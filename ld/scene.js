@@ -1,14 +1,29 @@
-Scene.prototype = new GameObject();
-Scene.prototype.constructor = GameObject;
-
 function Scene (type) {
     this.type = type;
     this.objects = new Array();
+
+    this.dumpTimer = 0;
 }
 
 Scene.prototype.update = function(deltaTime) {
+	var deadObjects = [];
+
 	for (var i = 0; i < this.objects.length; i++) {
-		this.objects[i].update(deltaTime);
+		this.objects[i].update(deltaTime, this);
+
+		if (this.objects[i].isDead) {
+			deadObjects.push(this.objects[i]);
+		}
+	}
+
+	for (var i = 0; i < deadObjects.length; i++) {
+		this.removeObject(deadObjects[i]);
+	}
+
+	this.dumpTimer += deltaTime;
+	if (this.dumpTimer >= 1) {
+		this.dumpTimer -= 1;
+		this.getInfo();
 	}
 };
 

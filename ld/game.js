@@ -103,7 +103,7 @@ Game.handleKeyUp = function(key) {
 var theImages = new Images(document);
 
 //setup the initial game scene
-Game.scene = new Scene("bologna!");
+Game.scene = new Scene("TestScene");
 
 for (var i = 0; i < 40; i++) {
 	var star = new Star(new Vector(i * 20, i * 2));
