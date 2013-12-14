@@ -31,13 +31,14 @@ Game.paused = false;
 Game.slowMotion = false;
 Game.slowMotionFactor = 5.0;
 Game.time = 0.0;
+Game.scene = null;
 
 Game.togglePause = function() {
-	Game.paused = !Game.paused;
+	this.paused = !this.paused;
 }
 
 Game.toggleSlowMotion = function() {
-	Game.slowMotion = !Game.slowMotion;
+	this.slowMotion = !this.slowMotion;
 }
 
 Game.run = (function() {
@@ -55,30 +56,34 @@ Game.run = (function() {
 })();
 
 Game.draw = function() {
-	// context.clearRect(0, 0, canvas.width, canvas.height);
+	// context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	
 	context.fillStyle = "#000"
-	context.fillRect(0, 0, canvas.width, canvas.height);
+	context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 
 	// context.drawImage(image, 0, 0, image.width, image.height, 0, 0, 400, 300);
 
 	context.font = "24px Arial";
 	context.fillStyle = "#aaa"
-	context.fillText("" + Game.time.toFixed(2), 24, 48);
+	context.fillText("" + this.time.toFixed(2), 24, 48);
+
+	this.scene.draw(context);
 };
 
 Game.update = function() { 
-	if (Game.paused) {
+	if (this.paused) {
 		return;
 	}
 
 	var deltaTime = 1 / Game.fps;
 
-	if (Game.slowMotion) {
-		deltaTime = deltaTime / Game.slowMotionFactor;
+	if (this.slowMotion) {
+		deltaTime = deltaTime / this.slowMotionFactor;
 	}
 
-	Game.time += deltaTime;
+	this.time += deltaTime;
+
+	this.scene.update(deltaTime);
 };
 
 Game.handleKeyDown = function(key) {
@@ -94,6 +99,17 @@ Game.handleKeyUp = function(key) {
 		Game.toggleSlowMotion();
 	}
 }
+
+//setup the initial game scene
+Game.scene = new Scene("bologna!");
+
+var testObject1 = new PointObject(new Vector(0, 0), new Vector(90, 37));
+var testObject2 = new PointObject(new Vector(700, 400), new Vector(-123, -41));
+
+Game.scene.addObject(testObject1);
+Game.scene.addObject(testObject2);
+
+Game.scene.getInfo();
 
 // var image = document.getElementById("imageId");
 
