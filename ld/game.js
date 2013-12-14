@@ -103,7 +103,7 @@ Game.handleKeyUp = function(key) {
 var theImages = new Images(document);
 
 //setup the initial game scene
-Game.scene = new Scene("TestScene");
+Game.scene = new GameScene("TestScene");
 
 for (var i = 0; i < 40; i++) {
 	var star = new Star(new Vector(i * 20, i * 2));
@@ -115,11 +115,41 @@ for (var i = 0; i < 40; i++) {
 	Game.scene.addObject(cannonball);
 }
 
+//test point objects
 var testObject1 = new PointObject(new Vector(0, 0), new Vector(90, 37), 10);
 var testObject2 = new PointObject(new Vector(700, 400), new Vector(-123, -41), 40);
 
 Game.scene.addObject(testObject1);
 Game.scene.addObject(testObject2);
+
+{
+	var points = [
+				new Vector(312, 12), 
+				new Vector(600, 12), 
+				new Vector(450, 300)];
+
+	var testPolygon1 = new PolygonObject(points, "#00f", "#f00");
+	Game.scene.addObject(testPolygon1);
+}
+
+{
+	var points = [];
+	// new Vector(12, 12), 
+	// new Vector(300, 12), 
+	// new Vector(150, 300)];
+
+	for (var i = 0; i < 14; i++) {
+		points.push(new Vector(Math.random() * 300 + 10, Math.random() * 300 + 10));
+	}
+
+	var testPolygon1 = new PolygonObject(points, "#00f", "#f00");
+	Game.scene.addObject(testPolygon1);
+}
+
+var testRect = new RectangleObject(new Vector(300, 300), new Vector(49, 49), "#666", "#fff");
+Game.scene.addObject(testRect);
+
+
 
 Game.scene.getInfo();
 

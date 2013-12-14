@@ -1,4 +1,4 @@
-function GameObject () {
+function GameObject() {
 	this.isDead = false;
 }
 

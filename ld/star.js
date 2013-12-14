@@ -1,7 +1,7 @@
 Star.prototype = new PointObject();
 Star.prototype.constructor = PointObject;
 
-function Star (position) {
+function Star(position) {
 	PointObject.call(this, position, null, 8);;
 }
 

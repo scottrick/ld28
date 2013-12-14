@@ -1,8 +1,7 @@
 PointObject.prototype = new GameObject();
 PointObject.prototype.constructor = GameObject;
 
-
-function PointObject (position, velocity, radius) {
+function PointObject(position, velocity, radius) {
 	GameObject.call(this);
 
     this.position = position;
@@ -31,6 +30,7 @@ PointObject.prototype.draw = function(context) {
 	}
 };
 
+//Specific point objects should override this with the image they want to use
 PointObject.prototype.getImage = function() {
 	return null;
 }

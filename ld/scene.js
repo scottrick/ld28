@@ -1,5 +1,5 @@
-function Scene (type) {
-    this.type = type;
+function Scene(name) {
+    this.name = name;
     this.objects = new Array();
 
     this.dumpTimer = 0;
@@ -46,6 +46,6 @@ Scene.prototype.removeObject = function(object) {
 }
 
 Scene.prototype.getInfo = function() {
-	console.log("Scene [" + this.type + "] has " + this.objects.length + " objects.");;
+	console.log("Scene [" + this.name + "] has " + this.objects.length + " objects.");;
 };
 

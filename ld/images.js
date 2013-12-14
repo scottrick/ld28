@@ -1,4 +1,4 @@
-function Images (document) {
+function Images(document) {
 	this.star = document.getElementById("starImageId");
 	this.cannon = document.getElementById("cannonImageId");
 }
