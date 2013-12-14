@@ -100,18 +100,28 @@ Game.handleKeyUp = function(key) {
 	}
 }
 
+var theImages = new Images(document);
+
 //setup the initial game scene
 Game.scene = new Scene("bologna!");
 
-var testObject1 = new PointObject(new Vector(0, 0), new Vector(90, 37));
-var testObject2 = new PointObject(new Vector(700, 400), new Vector(-123, -41));
+for (var i = 0; i < 40; i++) {
+	var star = new Star(new Vector(i * 20, i * 2));
+	Game.scene.addObject(star);
+}
+
+for (var i = 0; i < 40; i++) {
+	var cannonball = new Cannonball(new Vector(i * 20, 600 - i * 2), new Vector((Math.random() - 0.5) * 20, - 50 + (Math.random() - 0.5) * 30));
+	Game.scene.addObject(cannonball);
+}
+
+var testObject1 = new PointObject(new Vector(0, 0), new Vector(90, 37), 10);
+var testObject2 = new PointObject(new Vector(700, 400), new Vector(-123, -41), 40);
 
 Game.scene.addObject(testObject1);
 Game.scene.addObject(testObject2);
 
 Game.scene.getInfo();
-
-// var image = document.getElementById("imageId");
 
 // var audio = document.getElementById("audioId");
 // audio.play();

@@ -1,3 +1,6 @@
+Scene.prototype = new GameObject();
+Scene.prototype.constructor = GameObject;
+
 function Scene (type) {
     this.type = type;
     this.objects = new Array();
