@@ -8,13 +8,17 @@ function PointObject(position, velocity, radius) {
 
     this.position = position;
     this.previousPosition = position;
+
     this.velocity = velocity;
+    this.previousVelocity = velocity;
+
     this.radius = radius;
 }
 
 PointObject.prototype.update = function(deltaTime, scene) {
 	if (this.velocity != null && (this.velocity.x != 0 || this.velocity.y != 0)) {
 		this.previousPosition = this.position;
+		this.previousVelocity = this.velocity;
 
 		this.position.x += this.velocity.x * deltaTime;
 		this.position.y += this.velocity.y * deltaTime;
@@ -34,9 +38,13 @@ PointObject.prototype.draw = function(context) {
 	}
 	else {
 		context.beginPath();
-		context.fillStyle = "#0a0"
+
+		context.fillStyle = "#0a0";
+		context.strokeStyle = "fff";
+
 		context.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
 		context.fill();
+		context.stroke();
 	}
 };
 
@@ -44,3 +52,18 @@ PointObject.prototype.draw = function(context) {
 PointObject.prototype.getImage = function() {
 	return null;
 }
+
+PointObject.prototype.collide = function(collisionObject, collisionPoint) {
+	var originalSpeed = this.previousVelocity.distance();
+	var newDir = new Vector(collisionObject.previousVelocity.x, collisionObject.previousVelocity.y);
+	newDir.normalize();
+
+	newDir.x *= originalSpeed;
+	newDir.y *= originalSpeed;
+
+	this.velocity = newDir;
+}
+
+
+
+

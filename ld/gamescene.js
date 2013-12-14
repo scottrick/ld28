@@ -5,9 +5,10 @@ function GameScene(name) {
 	Scene.call(this, name);
 
 	this.buckets = [];
+	this.DEBUG_DRAW = false;
 
-	var NUM_BUCKETS_X = 24;
-	var NUM_BUCKETS_Y = 18;
+	var NUM_BUCKETS_X = 16;
+	var NUM_BUCKETS_Y = 12;
 	var BUCKET_WIDTH = gameWidth / NUM_BUCKETS_X;
 	var BUCKET_HEIGHT = gameHeight / NUM_BUCKETS_Y;
 
@@ -31,6 +32,10 @@ GameScene.prototype.update = function(deltaTime, scene) {
 
 GameScene.prototype.draw = function(context) {
 	Scene.prototype.draw.call(this, context);
+
+	if (!this.DEBUG_DRAW) {
+		return;
+	}
 
 	for (var i = 0; i < this.buckets.length; i++) {
 		var bucket = this.buckets[i];
@@ -58,7 +63,13 @@ GameScene.prototype.checkCollisions = function() {
 		}
 	}
 
+	var checkCount = 0;
+
 	//check collisions in each bucket!
+	for (var i = 0; i < this.buckets.length; i++) {
+		var bucket = this.buckets[i];
+		checkCount += bucket.checkCollisions();
+	}
 }
 
 GameScene.prototype.updateBucket = function(object) {

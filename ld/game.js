@@ -26,7 +26,8 @@ addEventListener("keyup", function (e) {
 
 var Game = { };
 
-Game.fps = 30; //number of redraws / game state updates a second
+Game.updatesPerSecond = 100;
+Game.drawsPerSecond = 30;
 Game.paused = false;
 Game.slowMotion = false;
 Game.slowMotionFactor = 5.0;
@@ -42,15 +43,21 @@ Game.toggleSlowMotion = function() {
 }
 
 Game.run = (function() {
-		var ticksPerUpdate = 1000 / Game.fps;
-		var nextGameTick = (new Date).getTime() + ticksPerUpdate;
+		var ticksPerUpdate = 1000 / Game.updatesPerSecond;
+		var ticksPerRedraw = 1000 / Game.drawsPerSecond;
+		var nextGameUpdateTick = (new Date).getTime() + ticksPerUpdate;
+		var nextGameRedrawTick = nextGameUpdateTick;
 		
 		return function() {
-			while ((new Date).getTime() > nextGameTick) {
-				nextGameTick += ticksPerUpdate;
+			while ((new Date).getTime() > nextGameUpdateTick) {
+				nextGameUpdateTick += ticksPerUpdate;
 
 				Game.update();
-				Game.draw();
+
+				if (nextGameUpdateTick > nextGameRedrawTick) {
+					Game.draw();
+					nextGameRedrawTick += ticksPerRedraw;
+				}
 			}		
 		};
 })();
@@ -75,7 +82,7 @@ Game.update = function() {
 		return;
 	}
 
-	var deltaTime = 1 / Game.fps;
+	var deltaTime = 1 / Game.updatesPerSecond;
 
 	if (this.slowMotion) {
 		deltaTime = deltaTime / this.slowMotionFactor;
@@ -110,41 +117,46 @@ Game.scene = new GameScene("TestScene");
 // 	Game.scene.addObject(star);
 // }
 
-for (var i = 0; i < 40; i++) {
-	var cannonball = new Cannonball(new Vector(i * 20, 600 - i * 2), new Vector((Math.random() - 0.5) * 20, - 50 + (Math.random() - 0.5) * 30));
+for (var i = 0; i < 8; i++) {
+	var cannonball = new Cannonball(new Vector(i * 100, 600 - i * 2), new Vector((Math.random() - 0.5) * 50, - 50 + (Math.random() - 0.5) * 30));
+	Game.scene.addObject(cannonball);
+}
+
+for (var i = 0; i < 8; i++) {
+	var cannonball = new Cannonball(new Vector(i * 100, i * 2), new Vector((Math.random() - 0.5) * 50, 50 + (Math.random() - 0.5) * - 40));
 	Game.scene.addObject(cannonball);
 }
 
 //test point objects
-var testObject1 = new PointObject(new Vector(0, 0), new Vector(90, 37), 10);
-var testObject2 = new PointObject(new Vector(700, 400), new Vector(-123, -41), 40);
+var testObject1 = new PointObject(new Vector(0, 0), new Vector(90, 37), 45);
+var testObject2 = new PointObject(new Vector(700, 400), new Vector(-123, -141), 60);
 
 Game.scene.addObject(testObject1);
 Game.scene.addObject(testObject2);
 
-{
-	var points = [
-				new Vector(312, 12), 
-				new Vector(600, 12), 
-				new Vector(450, 300)];
+// {
+// 	var points = [
+// 				new Vector(312, 12), 
+// 				new Vector(600, 12), 
+// 				new Vector(450, 300)];
 
-	var testPolygon1 = new PolygonObject(points, "#00f", "#f00");
-	Game.scene.addObject(testPolygon1);
-}
+// 	var testPolygon1 = new PolygonObject(points, "#00f", "#f00");
+// 	Game.scene.addObject(testPolygon1);
+// }
 
-{
-	var points = [];
+// {
+// 	var points = [];
 
-	for (var i = 0; i < 14; i++) {
-		points.push(new Vector(Math.random() * 300 + 10, Math.random() * 300 + 10));
-	}
+// 	for (var i = 0; i < 14; i++) {
+// 		points.push(new Vector(Math.random() * 300 + 10, Math.random() * 300 + 10));
+// 	}
 
-	var testPolygon1 = new PolygonObject(points, "#00f", "#f00");
-	Game.scene.addObject(testPolygon1);
-}
+// 	var testPolygon1 = new PolygonObject(points, "#00f", "#f00");
+// 	Game.scene.addObject(testPolygon1);
+// }
 
-var testRect = new RectangleObject(new Vector(300, 300), new Vector(49, 49), "#666", "#fff");
-Game.scene.addObject(testRect);
+// var testRect = new RectangleObject(new Vector(300, 300), new Vector(49, 49), "#666", "#fff");
+// Game.scene.addObject(testRect);
 
 
 
