@@ -2,32 +2,13 @@
 //Scott Atkins
 //December 2013
 
-var canvasInset = 8;
-
 var documentWidth = window.innerWidth;
 var documentHeight = window.innerHeight;
 
-if (documentWidth === undefined) {
-	documentWidth = 800;
-}
-if (documentHeight === undefined) {
-	documentHeight = 600;
-}	
+var gameWidth = 800;
+var gameHeight = 600;
 
-var gameWidth = documentWidth - canvasInset * 2;
-var gameHeight = documentHeight - canvasInset * 2;
-
-// console.log("screen " + screen.width + ", " + screen.height);
-// console.log("window " + window.innerWidth + ", " + window.innerHeight);
-
-var canvas = document.createElement("canvas");
-canvas.style.border = "none";
-canvas.width = gameWidth;
-canvas.height = gameHeight;
-document.body.appendChild(canvas);
-
-// console.log(canvas.style);
-
+var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
 
 //state variables
