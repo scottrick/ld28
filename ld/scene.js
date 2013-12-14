@@ -29,7 +29,9 @@ Scene.prototype.update = function(deltaTime) {
 
 Scene.prototype.draw = function(context) {
 	for (var i = 0; i < this.objects.length; i++) {
-		this.objects[i].draw(context);
+		if (this.objects[i].shouldDraw) {
+			this.objects[i].draw(context);
+		}	
 	}
 }
 

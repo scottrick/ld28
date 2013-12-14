@@ -4,15 +4,25 @@ PointObject.prototype.constructor = GameObject;
 function PointObject(position, velocity, radius) {
 	GameObject.call(this);
 
+	this.collisionType = COLLISION_TYPE_CIRCLE;
+
     this.position = position;
+    this.previousPosition = position;
     this.velocity = velocity;
     this.radius = radius;
 }
 
 PointObject.prototype.update = function(deltaTime, scene) {
-	if (this.velocity != null) {
+	if (this.velocity != null && (this.velocity.x != 0 || this.velocity.y != 0)) {
+		this.previousPosition = this.position;
+
 		this.position.x += this.velocity.x * deltaTime;
 		this.position.y += this.velocity.y * deltaTime;
+
+		this.didMove = true;
+	}
+	else {
+		this.didMove = false;
 	}
 };
 

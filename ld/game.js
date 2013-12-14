@@ -105,10 +105,10 @@ var theImages = new Images(document);
 //setup the initial game scene
 Game.scene = new GameScene("TestScene");
 
-for (var i = 0; i < 40; i++) {
-	var star = new Star(new Vector(i * 20, i * 2));
-	Game.scene.addObject(star);
-}
+// for (var i = 0; i < 40; i++) {
+// 	var star = new Star(new Vector(i * 20, i * 2));
+// 	Game.scene.addObject(star);
+// }
 
 for (var i = 0; i < 40; i++) {
 	var cannonball = new Cannonball(new Vector(i * 20, 600 - i * 2), new Vector((Math.random() - 0.5) * 20, - 50 + (Math.random() - 0.5) * 30));
@@ -134,9 +134,6 @@ Game.scene.addObject(testObject2);
 
 {
 	var points = [];
-	// new Vector(12, 12), 
-	// new Vector(300, 12), 
-	// new Vector(150, 300)];
 
 	for (var i = 0; i < 14; i++) {
 		points.push(new Vector(Math.random() * 300 + 10, Math.random() * 300 + 10));

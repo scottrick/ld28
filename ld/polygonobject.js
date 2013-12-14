@@ -4,6 +4,8 @@ PolygonObject.prototype.constructor = GameObject;
 function PolygonObject(points, fillColor, strokeColor) {
 	GameObject.call(this);
 
+	this.collisionType = COLLISION_TYPE_POLYGON;
+
     this.points = points;
     this.fillColor = fillColor;
     this.strokeColor = strokeColor;
@@ -14,7 +16,6 @@ PolygonObject.prototype.update = function(deltaTime, scene) {
 };
 
 PolygonObject.prototype.draw = function(context) {
-	context.strokeColor = this.strokeColor;
 	context.fillStyle = this.fillColor;
 	context.strokeStyle = this.strokeColor;
 
