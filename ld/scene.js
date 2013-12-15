@@ -80,7 +80,7 @@ Scene.prototype.handleKeyUp = function(key) {
 
 }
 
-Scene.prototype.loadData = function(data) {
+Scene.prototype.loadLevelData = function(data) {
 	this.gameScale = data[0];
 	var starRadius = this.gameScale * 5 / 12; 
 
@@ -108,6 +108,30 @@ Scene.prototype.loadData = function(data) {
 			}
 				break;
 		}
+	}
+}
+
+Scene.prototype.loadPolyData = function(data) {
+	for (var i = 0; i < data.length; i) {
+		var numPoints = data[i];
+		var fillColor = data[i + 1];
+		var strokeColor = data[i + 2];
+
+		console.log("numPoints " + numPoints + ",  " + fillColor + " ,  "+  strokeColor);
+
+		var points = [];
+		i += 3;
+
+		for (var k = 0; k < numPoints * 2; k += 2) {
+			var x = data[i + k];
+			var y = data[i + k + 1];
+			var newPoint = new Vector(x, y);
+			points.push(newPoint);
+		}
+
+		i += numPoints * 2;
+
+		this.addObject(new PolygonObject(points, fillColor, strokeColor));
 	}
 }
 

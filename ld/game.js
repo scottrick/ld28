@@ -121,13 +121,13 @@ Game.setupLevels = function() {
 	this.levels = [];
 	this.levels.push(new SplashScene());
 
-	var levelOne = new GameScene("LevelOne", levelOneData);
+	var levelOne = new GameScene("LevelOne", levelOneData, levelOnePolys);
 	levelOne.showHelp();
 
 	this.levels.push(levelOne);
-	this.levels.push(new GameScene("LevelTwo", levelTwoData));
-	this.levels.push(new GameScene("LevelThree", levelThreeData));
-	this.levels.push(new GameScene("LevelFour", levelFourData));
+	this.levels.push(new GameScene("LevelTwo", levelTwoData, levelTwoPolys));
+	this.levels.push(new GameScene("LevelThree", levelThreeData, levelThreePolys));
+	this.levels.push(new GameScene("LevelFour", levelFourData, levelFourPolys));
 	this.levels.push(new VictoryScene());
 }
 
@@ -150,70 +150,6 @@ Game.nextLevel = function() {
 		}
 	}
 }
-
-// var spacing = 24;
-// for (var x = 0; x < 33; x++) {
-// 	for (var y = 0; y < 25; y++) {
-// 		var star = new Star(new Vector(16 + x * spacing, 12 + y * spacing));
-// 		Game.scene.addObject(star);
-// 	}
-// }
-
-
-// var star = new Star(new Vector(400, 300));
-// Game.scene.addObject(star);
-// star.explode();
-
-
-// for (var i = 0; i < 8; i++) {
-// 	var cannonball = new Cannonball(new Vector(i * 100, i * 2), new Vector((Math.random() - 0.5) * 50, 50 + (Math.random() - 0.5) * - 40));
-// 	Game.scene.addObject(cannonball);
-// }
-
-// var cannonball = new Cannonball(new Vector(100, 500), new Vector(50, -220));
-// Game.scene.addObject(cannonball);
-
-//test point objects
-// var testObject1 = new PointObject(new Vector(0, 0), new Vector(90, 37), 45);
-// var testObject2 = new PointObject(new Vector(700, 400), new Vector(-123, -141), 60);
-
-// Game.scene.addObject(testObject1);
-// Game.scene.addObject(testObject2);
-
-// {
-// 	var points = [
-// 				new Vector(150, 122), 
-// 				new Vector(200, 40), 
-// 				new Vector(450, 200)];
-
-// 	var testPolygon1 = new PolygonObject(points, "#00f", "#f00");
-// 	Game.scene.addObject(testPolygon1);
-// }
-
-// {
-// 	var points = [
-// 				new Vector(400, 200), 
-// 				new Vector(500, 300), 
-// 				new Vector(400, 400), 
-// 				new Vector(300, 300)];
-
-// 	var testPolygon1 = new PolygonObject(points, "#00f", "#f00");
-// 	Game.scene.addObject(testPolygon1);
-// }
-
-// {
-// 	var points = [];
-
-// 	for (var i = 0; i < 4; i++) {
-// 		points.push(new Vector(Math.random() * 300 + 10, Math.random() * 300 + 10));
-// 	}
-
-// 	var testPolygon1 = new PolygonObject(points, "#00f", "#f00");
-// 	Game.scene.addObject(testPolygon1);
-// }
-
-// var testRect = new RectangleObject(new Vector(300, 300), new Vector(49, 49), "#666", "#fff");
-// Game.scene.addObject(testRect);
 
 // var audio = document.getElementById("audioId");
 // audio.play();

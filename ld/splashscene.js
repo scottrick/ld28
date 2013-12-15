@@ -4,7 +4,7 @@ SplashScene.prototype.constructor = Scene;
 function SplashScene() {
 	Scene.call(this, "SplashScene");
 
-	this.loadData(splashData);
+	this.loadLevelData(splashData);
 
 	this.starting = false;
 	this.life = 2;

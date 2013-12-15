@@ -12,7 +12,7 @@ function Cannon(position, velocity, radius) {
     this.maxAngle = 160;
 
     this.cannonSpeed = 500;
-    this.cannonRotateSpeed = 45;
+    this.cannonRotateSpeed = 60;
 
     this.cannonRadius = 32;
 

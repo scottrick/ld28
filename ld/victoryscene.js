@@ -4,7 +4,7 @@ VictoryScene.prototype.constructor = Scene;
 function VictoryScene() {
 	Scene.call(this, "VictoryScene");
 
-	this.loadData(victoryData);
+	this.loadLevelData(victoryData);
 
 	this.ending = false;
 	this.life = 2;

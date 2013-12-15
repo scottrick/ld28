@@ -6,9 +6,11 @@ var STATE_HELP = 3;
 var STATE_RETRY = 4;
 var STATE_SUCCESS = 5;
 
-function GameScene(name, data) {
+function GameScene(name, levelData, polyData) {
 	this.DEBUG_DRAW = false;
-	this.levelData = data;
+	this.debugOptions = false;
+	this.levelData = levelData;
+	this.polyData = polyData;
 
 	Scene.call(this, name);
 }
@@ -365,6 +367,18 @@ GameScene.prototype.handleKeyDown = function(key) {
 
 GameScene.prototype.handleKeyUp = function(key) {
 	Scene.prototype.handleKeyUp.call(this, key);
+	console.log("key: " + key);
+
+	if (this.debugOptions) {
+		if (key == 80) {
+			//hack
+			Game.nextLevel();
+		}
+
+		if (key == 82) {
+			this.reset();
+		}
+	}
 
 	if (this.state == STATE_HELP) {
 		if (key == 72 || key == 32) {
@@ -465,7 +479,13 @@ GameScene.prototype.reset = function() {
 	this.cannon = new Cannon();
 	this.addObject(this.cannon);
 
-	this.loadData(this.levelData);
+	if (this.levelData != null) {
+		this.loadLevelData(this.levelData);
+	}
+
+	if (this.polyData != null) {
+		this.loadPolyData(this.polyData);
+	}
 
 	this.setupBoundaries();
 }
