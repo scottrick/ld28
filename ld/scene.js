@@ -54,3 +54,27 @@ Scene.prototype.getInfo = function() {
 	console.log("Scene [" + this.name + "] has " + this.objects.length + " objects.");;
 };
 
+Scene.prototype.loadData = function(data) {
+	var spacing = 24;
+
+	for (var i = 0; i < data.length; i++) {
+		var value = data[i];
+
+		if (value == null) {
+			continue;
+		}
+
+		var xPos = i % 33;
+		var yPos = Math.floor(i / 33);
+
+		switch (value) {
+			case 1:
+			{ //its a star!  so add it to the scene...
+				var star = new Star(new Vector(16 + xPos * spacing, 12 + yPos * spacing));
+				this.addObject(star);
+			}
+				break;
+		}
+	}
+}
+
