@@ -16,39 +16,41 @@ function Cannon(position, velocity, radius) {
 
     this.cannonRadius = 32;
 
-    this.shots = 100; // You only get one!
+    this.shots = 1; // You only get one!
 }
 
 Cannon.prototype.fire = function(scene) {
+    var xDir = Math.cos(Math.PI / 180 * this.aimAngle);    
+    var yDir = -Math.sin(Math.PI / 180 * this.aimAngle);    
+
+    var cannonballRadius = 12;
+    var startMultiplier = (cannonballRadius + 0.05) / yDir;
+
+    var startPosition = this.position.copy();
+    startPosition.x -= xDir * startMultiplier;
+    startPosition.y -= yDir * startMultiplier;
+
+    var speed = new Vector(xDir, yDir);
+    speed.normalize();
+    speed.x *= this.cannonSpeed;
+    speed.y *= this.cannonSpeed;
+
+    var smokeStart = startPosition.copy();
+    smokeStart.x -= xDir * startMultiplier * 1;
+    smokeStart.y -= yDir * startMultiplier * 2;
+
     if (this.shots > 0) {
         //firing!
-        var xDir = Math.cos(Math.PI / 180 * this.aimAngle);    
-        var yDir = -Math.sin(Math.PI / 180 * this.aimAngle);    
-
-        var cannonballRadius = 12;
-        var startMultiplier = (cannonballRadius + 0.05) / yDir;
-
-        var startPosition = this.position.copy();
-        startPosition.x -= xDir * startMultiplier;
-        startPosition.y -= yDir * startMultiplier;
-
-        var speed = new Vector(xDir, yDir);
-        speed.normalize();
-        speed.x *= this.cannonSpeed;
-        speed.y *= this.cannonSpeed;
-
         var cannonball = new Cannonball(startPosition, speed, cannonballRadius);
         scene.addObject(cannonball);
 
         this.shots--;
 
-        var smokeStart = startPosition.copy();
-        smokeStart.x -= xDir * startMultiplier * 1;
-        smokeStart.y -= yDir * startMultiplier * 2;
-        this.makeSmoke(smokeStart, scene);
+        this.makeSmoke(smokeStart, scene, 48, 16);
     }
     else {
-        //can't fire, out of cannonballs...
+        //out of ammunition, misfire!
+        this.makeSmoke(smokeStart, scene, 8, 8);
     }
 }
 
@@ -70,14 +72,14 @@ Cannon.prototype.draw = function(context) {
     }
 }
 
-Cannon.prototype.makeSmoke = function(startPosition, scene) {
-    var numSmokes = 48;
+Cannon.prototype.makeSmoke = function(startPosition, scene, number, scale) {
+    var numSmokes = number;
 
     for (var i = 0; i < numSmokes; i++) {
         var smokeStart = startPosition.copy();
-        smokeStart.x += (Math.random() - 0.5) * 32;
-        smokeStart.y += (Math.random() - 0.5) * 32;
-        var smoke = new Smoke(smokeStart, 15 + Math.random() * 15);
+        smokeStart.x += (Math.random() - 0.5) * scale * 2;
+        smokeStart.y += (Math.random() - 0.5) * scale * 2;
+        var smoke = new Smoke(smokeStart, scale + Math.random() * scale);
 
         scene.addObject(smoke);
     }
