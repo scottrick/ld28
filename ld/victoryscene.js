@@ -46,7 +46,7 @@ VictoryScene.prototype.update = function(deltaTime, scene) {
 
 		this.life -= deltaTime;
 		if (this.life <= 0) {
-			//we are dead...  launch level 1
+			//we are dead...  reset the game
 			Game.reset();
 		}
 	}

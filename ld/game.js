@@ -111,11 +111,15 @@ Game.handleKeyUp = function(key) {
 }
 
 Game.reset = function() {
-	//setup the initial game scene
-	this.scene = new SplashScene();
+	this.scene = null;
+
+	Game.setupLevels();
+	Game.nextLevel();
 }
 
 Game.setupLevels = function() {
+	this.levels = [];
+	this.levels.push(new SplashScene());
 	this.levels.push(new GameScene("LevelOne", levelOneData));
 	this.levels.push(new GameScene("LevelTwo", levelTwoData));
 	this.levels.push(new GameScene("LevelThree", levelThreeData));
@@ -127,7 +131,7 @@ Game.nextLevel = function() {
 	var currentLevelIndex = this.levels.indexOf(this.scene);
 
 	if (currentLevelIndex == null) {
-		//on splash screen!
+		//start them on the first level
 		this.scene = this.levels[0];
 	}
 	else {
@@ -213,8 +217,6 @@ Game.nextLevel = function() {
 
 // var audio = document.getElementById("audioId");
 // audio.play();
-
-Game.setupLevels();
 
 Game.reset();
 
