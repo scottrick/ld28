@@ -94,7 +94,7 @@ PointObject.prototype.collide = function(collisionObject, collisionPoint, collis
 	}
 
 	this.lastCollisionObject = collisionObject;
-	this.timeUntilNewCollisionWithLast = 0.1;
+	this.timeUntilNewCollisionWithLast = 0.08;
 
 	if (collisionObject.collisionType == COLLISION_TYPE_CIRCLE) {
 		if (this.pointType == POINT_TYPE_CANNONBALL && collisionObject.pointType == POINT_TYPE_CANNONBALL) {

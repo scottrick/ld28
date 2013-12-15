@@ -6,6 +6,8 @@ function GameScene(name, data) {
 
 	this.DEBUG_DRAW = false;
 
+	this.shouldShowHelp = false;
+
 	//setup the buckets
 	{
 		this.buckets = [];
@@ -41,6 +43,10 @@ GameScene.prototype.update = function(deltaTime, scene) {
 
 GameScene.prototype.draw = function(context) {
 	Scene.prototype.draw.call(this, context);
+
+	if (this.shouldShowHelp) {
+		this.drawHelp(context);
+	}
 
 	if (!this.DEBUG_DRAW) {
 		return;
@@ -222,13 +228,64 @@ GameScene.prototype.removeObject = function(object) {
 	this.removeFromBuckets(object);
 }
 
+GameScene.prototype.showHelp = function() {
+	this.shouldShowHelp = true;
+}
+
+GameScene.prototype.toggleHelp = function() {
+	this.shouldShowHelp = !this.shouldShowHelp;
+}
+
+GameScene.prototype.drawHelp = function(context) {
+	context.save();
+
+	context.lineWidth = 1.5;
+	context.globalAlpha = 0.8;
+	context.fillStyle = "#000";
+	context.strokeStyle = "0f0";
+	context.fillRect(100, 100, 600, 400);
+
+	context.globalAlpha = 1;
+	context.strokeRect(100, 100, 600, 400);
+
+	var startY = 124;
+	var spacingY = 24;
+	context.font = "20px Courier New";
+	context.fillStyle = "#0f0"
+
+	context.textAlign = "left"
+	context.fillText("Welcome to Star Cannon.", 112, startY);
+	startY += spacingY * 3;
+
+	context.fillText("Collect all the stars with a single cannonball.", 112, startY);
+	startY += spacingY * 2;
+
+	context.fillText("Aim the cannon with the left/right arrow keys.", 112, startY);
+	startY += spacingY;
+
+	context.fillText("Use spacebar to fire the cannon.", 112, startY);
+	startY += spacingY;
+
+	context.fillText("The 'h' key will toggle this help menu.", 112, startY);
+	startY += spacingY * 3;
+
+	context.fillText("Good luck!", 112, 500 - 16);
+	startY += spacingY;
+
+	context.restore();
+}
+
 GameScene.prototype.handleKeyDown = function(key) {
 	Scene.prototype.handleKeyDown.call(this, key);
+
+	if (this.shouldShowHelp) {
+		return;
+	}
 
 	switch (key) {
 		case 65:  //a
 		case 90:  //z
-		case 37: //left arrow
+		case 37:  //left arrow
 			//rotate left
 			this.cannon.rotateLeft();
 			break;
@@ -245,10 +302,23 @@ GameScene.prototype.handleKeyDown = function(key) {
 GameScene.prototype.handleKeyUp = function(key) {
 	Scene.prototype.handleKeyUp.call(this, key);
 
+	if (this.shouldShowHelp) {
+		if (key == 72 || key == 32) {
+			this.toggleHelp();
+		}
+
+		return;
+	}
+
 	switch (key) {
-		case 32: 	//spacebar
+		case 32:  //spacebar
 			//fire the cannon!
 			this.cannon.fire(this);
+			break;
+
+		case 72:  //h
+			//show help
+			this.toggleHelp();
 			break;
 	}
 }

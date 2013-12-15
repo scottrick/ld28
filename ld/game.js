@@ -120,7 +120,11 @@ Game.reset = function() {
 Game.setupLevels = function() {
 	this.levels = [];
 	this.levels.push(new SplashScene());
-	this.levels.push(new GameScene("LevelOne", levelOneData));
+
+	var levelOne = new GameScene("LevelOne", levelOneData);
+	levelOne.showHelp();
+
+	this.levels.push(levelOne);
 	this.levels.push(new GameScene("LevelTwo", levelTwoData));
 	this.levels.push(new GameScene("LevelThree", levelThreeData));
 	this.levels.push(new GameScene("LevelFour", levelFourData));
