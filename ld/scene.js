@@ -54,6 +54,14 @@ Scene.prototype.getInfo = function() {
 	console.log("Scene [" + this.name + "] has " + this.objects.length + " objects.");;
 };
 
+Scene.prototype.handleKeyDown = function(key) {
+
+}
+
+Scene.prototype.handleKeyUp = function(key) {
+
+}
+
 Scene.prototype.loadData = function(data) {
 	var spacing = 24;
 

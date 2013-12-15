@@ -1,23 +1,29 @@
 GameScene.prototype = new Scene();
 GameScene.prototype.constructor = Scene;
 
-function GameScene(name) {
+function GameScene(name, data) {
 	Scene.call(this, name);
 
-	this.buckets = [];
 	this.DEBUG_DRAW = false;
 
-	var NUM_BUCKETS_X = 20;
-	var NUM_BUCKETS_Y = 15;
-	var BUCKET_WIDTH = gameWidth / NUM_BUCKETS_X;
-	var BUCKET_HEIGHT = gameHeight / NUM_BUCKETS_Y;
+	//setup the buckets
+	{
+		this.buckets = [];
 
-	for (var x = 0; x < NUM_BUCKETS_X; x++) {
-		for (var y = 0; y < NUM_BUCKETS_Y; y++) {
-			var bucket = new Bucket(new Vector(x * BUCKET_WIDTH, y * BUCKET_HEIGHT), new Vector(BUCKET_WIDTH, BUCKET_HEIGHT));
-			this.buckets.push(bucket);
+		var NUM_BUCKETS_X = 20;
+		var NUM_BUCKETS_Y = 15;
+		var BUCKET_WIDTH = gameWidth / NUM_BUCKETS_X;
+		var BUCKET_HEIGHT = gameHeight / NUM_BUCKETS_Y;
+
+		for (var x = 0; x < NUM_BUCKETS_X; x++) {
+			for (var y = 0; y < NUM_BUCKETS_Y; y++) {
+				var bucket = new Bucket(new Vector(x * BUCKET_WIDTH, y * BUCKET_HEIGHT), new Vector(BUCKET_WIDTH, BUCKET_HEIGHT));
+				this.buckets.push(bucket);
+			}
 		}
 	}
+
+	this.loadData(data);
 
 	var boundaries = new RectangleObject(new Vector(0, 0), new Vector(800, 600), null, null);
 	boundaries.shouldDraw = false;
@@ -76,7 +82,7 @@ GameScene.prototype.updateBucket = function(object) {
 	if (object.collisionType == COLLISION_TYPE_NONE) {
 		return;
 	}
-	
+
 	this.removeFromBuckets(object);
 
 	for (var i = 0; i < this.buckets.length; i++) {
@@ -212,3 +218,18 @@ GameScene.prototype.removeObject = function(object) {
 	//object removed from scene, so remove it from all buckets as well
 	this.removeFromBuckets(object);
 }
+
+GameScene.prototype.handleKeyDown = function(key) {
+	Scene.prototype.handleKeyDown.call(this, key);
+}
+
+GameScene.prototype.handleKeyUp = function(key) {
+	Scene.prototype.handleKeyUp.call(this, key);
+
+	switch (key) {
+		case 32: 	//spacebar 32
+			Game.nextLevel(); //hack for now
+			break;
+	}
+}
+

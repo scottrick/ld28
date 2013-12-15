@@ -11,6 +11,8 @@ var gameHeight = 600;
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
 
+var theImages = new Images(document);
+
 //state variables
 var keysDown = {};
 
@@ -33,6 +35,7 @@ Game.slowMotion = false;
 Game.slowMotionFactor = 5.0;
 Game.time = 0.0;
 Game.scene = null;
+Game.levels = [];
 
 Game.togglePause = function() {
 	this.paused = !this.paused;
@@ -63,16 +66,8 @@ Game.run = (function() {
 })();
 
 Game.draw = function() {
-	// context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	
 	context.fillStyle = "#000"
 	context.fillRect(0, 0, context.canvas.width, context.canvas.height);
-
-	// context.drawImage(image, 0, 0, image.width, image.height, 0, 0, 400, 300);
-
-	// context.font = "24px Arial";
-	// context.fillStyle = "#aaa"
-	// context.fillText("" + this.time.toFixed(2), 24, 48);
 
 	this.scene.draw(context);
 };
@@ -94,30 +89,58 @@ Game.update = function() {
 };
 
 Game.handleKeyDown = function(key) {
-
+	Game.scene.handleKeyDown(key);
 }
 
 Game.handleKeyUp = function(key) {
-	if (key == 32) { // spacebar
-		Game.togglePause();
-	}
+	Game.scene.handleKeyUp(key);
 
-	if (key == 83) { //  s
-		Game.toggleSlowMotion();
-	}
+	// if (key == 32) { // spacebar
+	// 	Game.togglePause();
+	// }
 
-	if (key == 66) { //  b
-		if (Game.scene.DEBUG_DRAW != null) {
-			Game.scene.DEBUG_DRAW = !Game.scene.DEBUG_DRAW;
+	// if (key == 83) { //  s
+	// 	Game.toggleSlowMotion();
+	// }
+
+	// if (key == 66) { //  b
+	// 	if (Game.scene.DEBUG_DRAW != null) {
+	// 		Game.scene.DEBUG_DRAW = !Game.scene.DEBUG_DRAW;
+	// 	}
+	// }
+}
+
+Game.reset = function() {
+	//setup the initial game scene
+	this.scene = new SplashScene();
+}
+
+Game.setupLevels = function() {
+	this.levels.push(new GameScene("LevelOne", levelOneData));
+	this.levels.push(new GameScene("LevelTwo", levelTwoData));
+	this.levels.push(new GameScene("LevelThree", levelThreeData));
+	this.levels.push(new GameScene("LevelFour", levelFourData));
+}
+
+Game.nextLevel = function() {
+	var currentLevelIndex = this.levels.indexOf(this.scene);
+
+	if (currentLevelIndex == null) {
+		//on splash screen!
+		this.scene = this.levels[0];
+	}
+	else {
+		currentLevelIndex++;
+
+		if (currentLevelIndex < this.levels.length) {
+			this.scene = this.levels[currentLevelIndex];
+		}
+		else {
+			//were on the last level!  Game over here...
+			this.reset();
 		}
 	}
 }
-
-var theImages = new Images(document);
-
-//setup the initial game scene
-Game.scene = new SplashScene();
-
 
 // var spacing = 24;
 // for (var x = 0; x < 33; x++) {
@@ -134,7 +157,7 @@ Game.scene = new SplashScene();
 
 // var star = new Star(new Vector(400, 300));
 // Game.scene.addObject(star);
-// star.capture();
+// star.explode();
 
 
 // for (var i = 0; i < 8; i++) {
@@ -189,6 +212,10 @@ Game.scene = new SplashScene();
 
 // var audio = document.getElementById("audioId");
 // audio.play();
+
+Game.setupLevels();
+
+Game.reset();
 
 //start the loop!
 Game._intervalId = setInterval(Game.run, 0);

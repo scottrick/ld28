@@ -44,7 +44,7 @@ Star.prototype.onDeath = function() {
 
 };
 
-Star.prototype.capture = function() {
+Star.prototype.explode = function() {
 	this.expireSpeed = this.radius;
 	this.expiring = true;
 	this.collisionType = COLLISION_TYPE_NONE;
