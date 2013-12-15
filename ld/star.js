@@ -2,7 +2,7 @@ Star.prototype = new PointObject();
 Star.prototype.constructor = PointObject;
 
 function Star(position) {
-	PointObject.call(this, position, null, 8);
+	PointObject.call(this, position, null, 10);
 
 	this.pointType = POINT_TYPE_STAR;
 
@@ -53,7 +53,7 @@ Star.prototype.capture = function() {
 };
 
 Star.prototype.makeSparks = function() {
-	var numSparks = 10 + Math.random(10);
+	var numSparks = 4 + Math.random(4);
 
 	for (var i = 0; i < numSparks; i++) {
 		var v = Math.random() * 10 + 50;

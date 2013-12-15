@@ -70,9 +70,9 @@ Game.draw = function() {
 
 	// context.drawImage(image, 0, 0, image.width, image.height, 0, 0, 400, 300);
 
-	context.font = "24px Arial";
-	context.fillStyle = "#aaa"
-	context.fillText("" + this.time.toFixed(2), 24, 48);
+	// context.font = "24px Arial";
+	// context.fillStyle = "#aaa"
+	// context.fillText("" + this.time.toFixed(2), 24, 48);
 
 	this.scene.draw(context);
 };
