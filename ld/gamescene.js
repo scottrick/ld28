@@ -36,6 +36,19 @@ function GameScene(name, data) {
 GameScene.prototype.update = function(deltaTime, scene) {
 	Scene.prototype.update.call(this, deltaTime, scene);
 
+	if (!this.shouldShowHelp) {
+		//rotate cannon as needed
+		if (keysDown[65] || keysDown[90] || keysDown[37]) {
+			//rotate left
+			this.cannon.rotateLeft(deltaTime);
+		}
+
+		if (keysDown[68] || keysDown[88] || keysDown[39]) {
+			//rotate right
+			this.cannon.rotateRight(deltaTime);
+		}
+	}
+
 	this.checkCollisions();
 }
 
@@ -278,22 +291,6 @@ GameScene.prototype.handleKeyDown = function(key) {
 
 	if (this.shouldShowHelp) {
 		return;
-	}
-
-	switch (key) {
-		case 65:  //a
-		case 90:  //z
-		case 37:  //left arrow
-			//rotate left
-			this.cannon.rotateLeft();
-			break;
-
-		case 68:  //d
-		case 88:  //x
-		case 39:  //right arrow
-			//rotate right
-			this.cannon.rotateRight();
-			break;
 	}
 }
 

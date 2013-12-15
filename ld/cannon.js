@@ -10,12 +10,11 @@ function Cannon(position, velocity, radius) {
     this.aimAngle = 90;
     this.minAngle = 20;
     this.maxAngle = 160;
-    this.cannonRotateSpeed = 3;
 
     this.cannonSpeed = 500;
+    this.cannonRotateSpeed = 45;
 
-    this.rotation = 0;
-    this.alpha = 1;
+    this.cannonRadius = 32;
 
     this.shots = 12; // You only get one!
 }
@@ -54,26 +53,27 @@ Cannon.prototype.update = function(deltaTime, scene) {
 
 Cannon.prototype.draw = function(context) {
     var xDir = Math.cos(Math.PI / 180 * this.aimAngle);    
-    var yDir = -Math.sin(Math.PI / 180 * this.aimAngle);    
+    var yDir = -Math.sin(Math.PI / 180 * this.aimAngle);
 
-    context.strokeStyle = "#f0f";
-    context.lineWidth = 2;
+    var image = theImages.getCannon();
 
-    context.beginPath();
-    context.moveTo(this.position.x, this.position.y);
-    context.lineTo(this.position.x + xDir * 40, this.position.y + yDir * 40);
-    context.stroke();
+    context.translate(this.position.x, this.position.y);
+    context.rotate(Math.PI / 180 * -(this.aimAngle - 90));
+
+    if (image != null) {
+        context.drawImage(image, 0, 0, image.width, image.height, - this.cannonRadius, - this.cannonRadius, this.cannonRadius * 2, this.cannonRadius * 2);
+    }
 }
 
-Cannon.prototype.rotateLeft = function() {
-    this.aimAngle += this.cannonRotateSpeed;
+Cannon.prototype.rotateLeft = function(deltaTime) {
+    this.aimAngle += this.cannonRotateSpeed * deltaTime;
     if (this.aimAngle > this.maxAngle) {
         this.aimAngle = this.maxAngle;
     }
 }
 
-Cannon.prototype.rotateRight = function() {
-    this.aimAngle -= this.cannonRotateSpeed;
+Cannon.prototype.rotateRight = function(deltaTime) {
+    this.aimAngle -= this.cannonRotateSpeed * deltaTime;
     if (this.aimAngle < this.minAngle) {
         this.aimAngle = this.minAngle;
     }
