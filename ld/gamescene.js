@@ -30,9 +30,7 @@ function GameScene(name, data) {
 
 	this.loadData(data);
 
-	var boundaries = new RectangleObject(new Vector(0, 0), new Vector(800, 600), null, null);
-	boundaries.shouldDraw = false;
-	this.addObject(boundaries);
+	this.setupBoundaries();
 }
 
 GameScene.prototype.update = function(deltaTime, scene) {
@@ -327,5 +325,28 @@ GameScene.prototype.handleStarsGone = function() {
 	Scene.prototype.handleStarsGone.call(this);
 
 	Game.nextLevel();
+}
+
+GameScene.prototype.setupBoundaries = function() {
+	//left boundary
+	var leftBoundary = new RectangleObject(new Vector(-10, 0), new Vector(10, 600), null, null);
+	leftBoundary.shouldDraw = false;
+	this.addObject(leftBoundary);
+
+	//right boundary
+	var rightBoundary = new RectangleObject(new Vector(800, 0), new Vector(810, 600), null, null);
+	rightBoundary.shouldDraw = false;
+	this.addObject(rightBoundary);
+
+	//top boundary
+	var topBoundary = new RectangleObject(new Vector(0, -10), new Vector(800, 10), null, null);
+	topBoundary.shouldDraw = false;
+	this.addObject(topBoundary);
+
+	//bottom boundary
+	var bottomBoundary = new RectangleObject(new Vector(0, 600), new Vector(800, 10), null, null);
+	bottomBoundary.shouldDraw = false;
+	this.addObject(bottomBoundary);
+
 }
 
