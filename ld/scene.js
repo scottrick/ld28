@@ -117,8 +117,6 @@ Scene.prototype.loadPolyData = function(data) {
 		var fillColor = data[i + 1];
 		var strokeColor = data[i + 2];
 
-		console.log("numPoints " + numPoints + ",  " + fillColor + " ,  "+  strokeColor);
-
 		var points = [];
 		i += 3;
 

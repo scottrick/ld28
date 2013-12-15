@@ -79,10 +79,6 @@ PointObject.prototype.draw = function(context) {
 	}
 };
 
-PointObject.prototype.dump = function() {
-	console.log("PointObject dump pos (" + this.position.x.toFixed(2) + ", " + this.position.y.toFixed(2) +"),  vel (" + this.velocity.x.toFixed(2) + ", " + this.velocity.y.toFixed(2) + ")");
-};
-
 //Specific point objects should override this with the image they want to use
 PointObject.prototype.getImage = function() {
 	return null;

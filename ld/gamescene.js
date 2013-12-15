@@ -367,8 +367,7 @@ GameScene.prototype.handleKeyDown = function(key) {
 
 GameScene.prototype.handleKeyUp = function(key) {
 	Scene.prototype.handleKeyUp.call(this, key);
-	console.log("key: " + key);
-
+	
 	if (this.debugOptions) {
 		if (key == 80) {
 			//hack

@@ -136,6 +136,8 @@ Bucket.prototype.checkCircleAndPolygon = function(pointObject, polygonObject) {
   			continue;
   		}
 
+		theSounds.getNextBounceSound().play();
+
   		//they collided!
   		//pass the collision vector
   		pointObject.collide(polygonObject, closest, new Vector(seg_b.x - seg_a.x, seg_b.y - seg_a.y));

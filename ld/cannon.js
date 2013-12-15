@@ -47,12 +47,14 @@ Cannon.prototype.fire = function(scene) {
         this.shots--;
 
         this.makeSmoke(smokeStart, scene, 48, 16);
+        theSounds.getNextFireSound().play();
 
         return cannonball; //return the cannonball we fired
     }
     else {
         //out of ammunition, misfire!
         this.makeSmoke(smokeStart, scene, 8, 8);
+        theSounds.getNextMisfireSound().play();
     }
 }
 
