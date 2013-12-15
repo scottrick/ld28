@@ -20,7 +20,7 @@ Spark.prototype.update = function(deltaTime, scene) {
 	this.life -= deltaTime;
 
 	this.rotation += this.rotationSpeed * deltaTime;
-	this.alpha = 0.8 * this.life / this.maxLife;
+	this.alpha = 0.4 * this.life / this.maxLife;
 
 	if (this.life <= 0) {
 		this.isDead = true;
