@@ -4,6 +4,7 @@ GameScene.prototype.constructor = Scene;
 var STATE_GAME = 2;
 var STATE_HELP = 3;
 var STATE_RETRY = 4;
+var STATE_SUCCESS = 5;
 
 function GameScene(name, data) {
 	this.DEBUG_DRAW = false;
@@ -61,6 +62,10 @@ GameScene.prototype.draw = function(context) {
 
 		case STATE_RETRY:	
 			this.drawRetry(context);
+			break;
+
+		case STATE_SUCCESS:
+			this.drawSuccess(context);
 			break;
 
 		default:
@@ -267,9 +272,9 @@ GameScene.prototype.drawHelp = function(context) {
 
 	context.lineWidth = 1.5;
 	context.globalAlpha = 0.8;
-	context.fillStyle = "#000";
-	context.strokeStyle = "0f0";
+	context.strokeStyle = "#6666ff";
 	context.fillRect(100, 100, 600, 400);
+	context.fillStyle = context.strokeStyle;
 
 	context.globalAlpha = 1;
 	context.strokeRect(100, 100, 600, 400);
@@ -277,7 +282,6 @@ GameScene.prototype.drawHelp = function(context) {
 	var startY = 124;
 	var spacingY = 24;
 	context.font = "20px Courier New";
-	context.fillStyle = "#0f0"
 
 	context.textAlign = "left"
 	context.fillText("Welcome to Star Cannon.", 112, startY);
@@ -290,7 +294,7 @@ GameScene.prototype.drawHelp = function(context) {
 	startY += spacingY;
 
 	context.fillText("Use spacebar to fire the cannon.", 112, startY);
-	startY += spacingY;
+	startY += spacingY * 2;
 
 	context.fillText("The 'h' key will toggle this help menu.", 112, startY);
 	startY += spacingY * 3;
@@ -306,9 +310,9 @@ GameScene.prototype.drawRetry = function(context) {
 
 	context.lineWidth = 1.5;
 	context.globalAlpha = 0.8;
-	context.fillStyle = "#000";
-	context.strokeStyle = "0f0";
+	context.strokeStyle = "#f22";
 	context.fillRect(100, 100, 600, 400);
+	context.fillStyle = context.strokeStyle;
 
 	context.globalAlpha = 1;
 	context.strokeRect(100, 100, 600, 400);
@@ -316,14 +320,40 @@ GameScene.prototype.drawRetry = function(context) {
 	var startY = 124;
 	var spacingY = 24;
 	context.font = "20px Courier New";
-	context.fillStyle = "#0f0"
 
 	startY += spacingY * 2;
 
 	context.textAlign = "center"
 	context.fillText("You didn't get all the stars!", 400, startY);
 
-	context.fillText("[spacebar to try again]", 400, 500 - 16 - spacingY);
+	context.fillText("[spacebar to try again, 'Q' to quit]", 400, 500 - 16 - spacingY);
+	startY += spacingY;
+
+	context.restore();
+}
+
+GameScene.prototype.drawSuccess = function(context) {
+	context.save();
+
+	context.lineWidth = 1.5;
+	context.globalAlpha = 0.8;
+	context.strokeStyle = "#2f2";
+	context.fillRect(100, 100, 600, 400);
+	context.fillStyle = context.strokeStyle;
+
+	context.globalAlpha = 1;
+	context.strokeRect(100, 100, 600, 400);
+
+	var startY = 124;
+	var spacingY = 24;
+	context.font = "20px Courier New";
+
+	startY += spacingY * 2;
+
+	context.textAlign = "center"
+	context.fillText("Success!", 400, startY);
+
+	context.fillText("[spacebar to continue]", 400, 500 - 16 - spacingY);
 	startY += spacingY;
 
 	context.restore();
@@ -349,6 +379,18 @@ GameScene.prototype.handleKeyUp = function(key) {
 			this.reset();
 		}
 
+		if (key == 81) {  //q
+			Game.reset();
+		}
+
+		return;
+	}
+
+	if (this.state == STATE_SUCCESS) {
+		if (key == 32) {  //spacebar
+			Game.nextLevel();
+		}
+
 		return;
 	}
 
@@ -371,7 +413,7 @@ GameScene.prototype.handleKeyUp = function(key) {
 GameScene.prototype.handleStarsGone = function() {
 	Scene.prototype.handleStarsGone.call(this);
 
-	Game.nextLevel();
+	this.state = STATE_SUCCESS;
 }
 
 GameScene.prototype.setupBoundaries = function() {
