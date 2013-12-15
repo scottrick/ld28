@@ -57,7 +57,7 @@ Bucket.prototype.checkCollisions = function() {
 		for (var k = i + 1; k < this.objects.length; k++) {
 			var objectTwo = this.objects[k];
 
-			if (objectOne.didMove || objectTwo.didMore) {
+			if (objectOne.didMove || objectTwo.didMove) {
 				this.checkCollision(objectOne, objectTwo);
 				checkCount++;
 			}
@@ -106,4 +106,67 @@ Bucket.prototype.checkCollision = function(objectOne, objectTwo) {
 			return;
 		}
 	}
+	else if (objectOne.collisionType == COLLISION_TYPE_CIRCLE && objectTwo.collisionType == COLLISION_TYPE_POLYGON) {
+		this.checkCircleAndPolygon(objectOne, objectTwo);
+	}
+	else if (objectOne.collisionType == COLLISION_TYPE_POLYGON && objectTwo.collisionType == COLLISION_TYPE_CIRCLE) {
+		this.checkCircleAndPolygon(objectTwo, objectOne);
+	}
 }
+
+Bucket.prototype.checkCircleAndPolygon = function(pointObject, polygonObject) {
+	for (var i = 0; i < polygonObject.points.length; i++) {
+		var seg_a = polygonObject.points[i];
+		var seg_b = polygonObject.points[(i + 1) % polygonObject.points.length];
+		var circle_pos = pointObject.position;
+
+		var closest = this.closestPointOnSegmentToCircle(seg_a, seg_b, circle_pos);
+
+		// dist_v = circ_pos - closest
+		var dist_v = new Vector(circle_pos.x - closest.x, circle_pos.y - closest.y);
+
+		var distance = dist_v.distance();
+
+  		if (dist_v.distance() > pointObject.radius) {
+  			//not colliding!
+  			continue;
+  		}
+
+  		if (dist_v.distance() <= 0) {
+  			continue;
+  		}
+
+  		//they collided!
+  		//pass the collision vector
+  		pointObject.collide(polygonObject, closest, new Vector(seg_b.x - seg_a.x, seg_b.y - seg_a.y));
+  		return;
+	}
+}
+
+Bucket.prototype.closestPointOnSegmentToCircle = function(seg_a, seg_b, circle_pos) {
+	var seg_v  = new Vector(seg_b.x - seg_a.x, seg_b.y - seg_a.y);
+	var pt_v = new Vector(circle_pos.x - seg_a.x, circle_pos.y - seg_a.y);
+
+	 if (seg_v.distance() <= 0) {
+	 	return;
+	 }
+
+	 var seg_v_unit = new Vector(seg_v.x, seg_v.y);
+	 seg_v_unit.normalize();
+
+	 var proj = pt_v.dot(seg_v_unit);
+
+	 if (proj <= 0) {
+	 	return seg_a;
+	 }
+
+	 if (proj >= seg_v.distance()) {
+	 	return seg_b;
+	 }
+
+	var proj_v = new Vector(seg_v_unit.x * proj, seg_v_unit.y * proj);
+	var closest = new Vector(proj_v.x + seg_a.x, proj_v.y + seg_a.y);
+	return closest;
+}
+
+

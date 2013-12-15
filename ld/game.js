@@ -26,7 +26,7 @@ addEventListener("keyup", function (e) {
 
 var Game = { };
 
-Game.updatesPerSecond = 100;
+Game.updatesPerSecond = 120;
 Game.drawsPerSecond = 30;
 Game.paused = false;
 Game.slowMotion = false;
@@ -105,6 +105,12 @@ Game.handleKeyUp = function(key) {
 	if (key == 83) { //  s
 		Game.toggleSlowMotion();
 	}
+
+	if (key == 66) { //  b
+		if (Game.scene.DEBUG_DRAW != null) {
+			Game.scene.DEBUG_DRAW = !Game.scene.DEBUG_DRAW;
+		}
+	}
 }
 
 var theImages = new Images(document);
@@ -117,37 +123,51 @@ Game.scene = new GameScene("TestScene");
 // 	Game.scene.addObject(star);
 // }
 
-for (var i = 0; i < 8; i++) {
-	var cannonball = new Cannonball(new Vector(i * 100, 600 - i * 2), new Vector((Math.random() - 0.5) * 50, - 50 + (Math.random() - 0.5) * 30));
+for (var i = 0; i < 39; i++) {
+	var cannonball = new Cannonball(new Vector(10 + i * 20, 580 - i * 2), new Vector(100 + (Math.random() - 0.5) * 200, - 100 + (Math.random() - 0.5) * 200));
 	Game.scene.addObject(cannonball);
 }
 
-for (var i = 0; i < 8; i++) {
-	var cannonball = new Cannonball(new Vector(i * 100, i * 2), new Vector((Math.random() - 0.5) * 50, 50 + (Math.random() - 0.5) * - 40));
-	Game.scene.addObject(cannonball);
-}
+// for (var i = 0; i < 8; i++) {
+// 	var cannonball = new Cannonball(new Vector(i * 100, i * 2), new Vector((Math.random() - 0.5) * 50, 50 + (Math.random() - 0.5) * - 40));
+// 	Game.scene.addObject(cannonball);
+// }
+
+var cannonball = new Cannonball(new Vector(100, 500), new Vector(50, -220));
+Game.scene.addObject(cannonball);
 
 //test point objects
-var testObject1 = new PointObject(new Vector(0, 0), new Vector(90, 37), 45);
-var testObject2 = new PointObject(new Vector(700, 400), new Vector(-123, -141), 60);
+// var testObject1 = new PointObject(new Vector(0, 0), new Vector(90, 37), 45);
+// var testObject2 = new PointObject(new Vector(700, 400), new Vector(-123, -141), 60);
 
-Game.scene.addObject(testObject1);
-Game.scene.addObject(testObject2);
+// Game.scene.addObject(testObject1);
+// Game.scene.addObject(testObject2);
 
 // {
 // 	var points = [
-// 				new Vector(312, 12), 
-// 				new Vector(600, 12), 
-// 				new Vector(450, 300)];
+// 				new Vector(150, 122), 
+// 				new Vector(200, 40), 
+// 				new Vector(450, 200)];
 
 // 	var testPolygon1 = new PolygonObject(points, "#00f", "#f00");
 // 	Game.scene.addObject(testPolygon1);
 // }
 
+{
+	var points = [
+				new Vector(400, 200), 
+				new Vector(500, 300), 
+				new Vector(400, 400), 
+				new Vector(300, 300)];
+
+	var testPolygon1 = new PolygonObject(points, "#00f", "#f00");
+	Game.scene.addObject(testPolygon1);
+}
+
 // {
 // 	var points = [];
 
-// 	for (var i = 0; i < 14; i++) {
+// 	for (var i = 0; i < 4; i++) {
 // 		points.push(new Vector(Math.random() * 300 + 10, Math.random() * 300 + 10));
 // 	}
 
@@ -157,10 +177,6 @@ Game.scene.addObject(testObject2);
 
 // var testRect = new RectangleObject(new Vector(300, 300), new Vector(49, 49), "#666", "#fff");
 // Game.scene.addObject(testRect);
-
-
-
-Game.scene.getInfo();
 
 // var audio = document.getElementById("audioId");
 // audio.play();

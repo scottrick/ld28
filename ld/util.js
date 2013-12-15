@@ -14,6 +14,10 @@ Vector.prototype.normalize = function() {
 	this.y = this.y / distance;
 }
 
+Vector.prototype.dot = function(vec) {
+	return this.x * vec.x + this.y * vec.y;
+}
+
 //ty stackoverflow: http://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
 var CalculateLineIntersection = function(p0_x, p0_y, p1_x, p1_y, p2_x, p2_y, p3_x, p3_y)//, float *i_x, float *i_y)
 {

@@ -7,8 +7,8 @@ function GameScene(name) {
 	this.buckets = [];
 	this.DEBUG_DRAW = false;
 
-	var NUM_BUCKETS_X = 16;
-	var NUM_BUCKETS_Y = 12;
+	var NUM_BUCKETS_X = 20;
+	var NUM_BUCKETS_Y = 15;
 	var BUCKET_WIDTH = gameWidth / NUM_BUCKETS_X;
 	var BUCKET_HEIGHT = gameHeight / NUM_BUCKETS_Y;
 
