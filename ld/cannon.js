@@ -16,7 +16,7 @@ function Cannon(position, velocity, radius) {
 
     this.cannonRadius = 32;
 
-    this.shots = 12; // You only get one!
+    this.shots = 100; // You only get one!
 }
 
 Cannon.prototype.fire = function(scene) {
@@ -41,6 +41,11 @@ Cannon.prototype.fire = function(scene) {
         scene.addObject(cannonball);
 
         this.shots--;
+
+        var smokeStart = startPosition.copy();
+        smokeStart.x -= xDir * startMultiplier * 1;
+        smokeStart.y -= yDir * startMultiplier * 2;
+        this.makeSmoke(smokeStart, scene);
     }
     else {
         //can't fire, out of cannonballs...
@@ -62,6 +67,19 @@ Cannon.prototype.draw = function(context) {
 
     if (image != null) {
         context.drawImage(image, 0, 0, image.width, image.height, - this.cannonRadius, - this.cannonRadius, this.cannonRadius * 2, this.cannonRadius * 2);
+    }
+}
+
+Cannon.prototype.makeSmoke = function(startPosition, scene) {
+    var numSmokes = 48;
+
+    for (var i = 0; i < numSmokes; i++) {
+        var smokeStart = startPosition.copy();
+        smokeStart.x += (Math.random() - 0.5) * 32;
+        smokeStart.y += (Math.random() - 0.5) * 32;
+        var smoke = new Smoke(smokeStart, 15 + Math.random() * 15);
+
+        scene.addObject(smoke);
     }
 }
 

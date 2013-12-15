@@ -3,6 +3,7 @@ function Images(document) {
 	this.cannonball = document.getElementById("cannonballImageId");
 	this.spark = document.getElementById("sparkImageId");
 	this.cannon = document.getElementById("cannonImageId");
+	this.smoke = document.getElementById("smokeImageId");
 }
 
 Images.prototype.getStar = function() {
@@ -19,4 +20,8 @@ Images.prototype.getSpark = function() {
 
 Images.prototype.getCannon = function() {
 	return this.cannon;
+}
+
+Images.prototype.getSmoke = function() {
+	return this.smoke;
 }
