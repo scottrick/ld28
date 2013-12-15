@@ -12,6 +12,7 @@ var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
 
 var theImages = new Images(document);
+var theSounds = new Sounds(document);
 
 //state variables
 var keysDown = {};
@@ -150,9 +151,6 @@ Game.nextLevel = function() {
 		}
 	}
 }
-
-// var audio = document.getElementById("audioId");
-// audio.play();
 
 Game.reset();
 

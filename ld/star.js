@@ -50,6 +50,8 @@ Star.prototype.explode = function() {
 	this.collisionType = COLLISION_TYPE_NONE;
 
 	this.makeSparks();
+
+	theSounds.getNextStarSound().play();
 };
 
 Star.prototype.makeSparks = function() {
