@@ -120,6 +120,7 @@ Game.setupLevels = function() {
 	this.levels.push(new GameScene("LevelTwo", levelTwoData));
 	this.levels.push(new GameScene("LevelThree", levelThreeData));
 	this.levels.push(new GameScene("LevelFour", levelFourData));
+	this.levels.push(new VictoryScene());
 }
 
 Game.nextLevel = function() {
