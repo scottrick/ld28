@@ -1,8 +1,8 @@
 Spark.prototype = new PointObject();
 Spark.prototype.constructor = PointObject;
 
-function Spark(position, velocity, life) {
-	PointObject.call(this, position, velocity, 8);
+function Spark(position, velocity, radius, life) {
+	PointObject.call(this, position, velocity, radius);
 
 	this.pointType = POINT_TYPE_UNKNOWN;
 	this.collisionType = COLLISION_TYPE_NONE;

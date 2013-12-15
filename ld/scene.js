@@ -3,6 +3,8 @@ function Scene(name) {
     this.objects = new Array();
 
     this.dumpTimer = 0;
+
+    this.gameScale = 24;
 }
 
 Scene.prototype.update = function(deltaTime) {
@@ -63,22 +65,29 @@ Scene.prototype.handleKeyUp = function(key) {
 }
 
 Scene.prototype.loadData = function(data) {
-	var spacing = 24;
+	this.gameScale = data[0];
+	var starRadius = this.gameScale * 5 / 12; 
 
-	for (var i = 0; i < data.length; i++) {
+	var xRows = Math.floor(800 / this.gameScale);
+	var xOffset = (800 - xRows * this.gameScale) / 2 + starRadius;
+
+	var yRows = Math.floor(600 / this.gameScale);
+	var yOffset = (600 - yRows * this.gameScale) / 2 + starRadius;
+
+	for (var i = 1; i < data.length; i++) {
 		var value = data[i];
 
 		if (value == null) {
 			continue;
 		}
 
-		var xPos = i % 33;
-		var yPos = Math.floor(i / 33);
+		var xPos = (i - 1) % xRows;
+		var yPos = Math.floor((i - 1) / xRows);
 
 		switch (value) {
 			case 1:
 			{ //its a star!  so add it to the scene...
-				var star = new Star(new Vector(16 + xPos * spacing, 12 + yPos * spacing));
+				var star = new Star(new Vector(xOffset + xPos * this.gameScale, yOffset + yPos * this.gameScale), starRadius);
 				this.addObject(star);
 			}
 				break;
