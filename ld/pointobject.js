@@ -1,6 +1,10 @@
 PointObject.prototype = new GameObject();
 PointObject.prototype.constructor = GameObject;
 
+var POINT_TYPE_STAR = 1;
+var POINT_TYPE_CANNONBALL = 2;
+var POINT_TYPE_UNKNOWN = 3;
+
 function PointObject(position, velocity, radius) {
 	GameObject.call(this);
 
@@ -13,6 +17,11 @@ function PointObject(position, velocity, radius) {
     this.previousVelocity = velocity;
 
     this.radius = radius;
+
+    this.rotation = 0;
+    this.alpha = 1;
+
+    this.pointType = POINT_TYPE_UNKNOWN;
 }
 
 PointObject.prototype.update = function(deltaTime, scene) {
@@ -41,8 +50,12 @@ PointObject.prototype.update = function(deltaTime, scene) {
 PointObject.prototype.draw = function(context) {
 	var image = this.getImage();
 
+	context.globalAlpha = this.alpha;
+	context.translate(this.position.x, this.position.y);
+	context.rotate(Math.PI / 180 * this.rotation);
+
 	if (image != null) {
-		context.drawImage(image, 0, 0, image.width, image.height, this.position.x - this.radius, this.position.y - this.radius, this.radius * 2, this.radius * 2);
+		context.drawImage(image, 0, 0, image.width, image.height, - this.radius, - this.radius, this.radius * 2, this.radius * 2);
 	}
 	else {
 		context.beginPath();
@@ -80,14 +93,20 @@ PointObject.prototype.collide = function(collisionObject, collisionPoint, collis
 	this.timeUntilNewCollisionWithLast = 0.1;
 
 	if (collisionObject.collisionType == COLLISION_TYPE_CIRCLE) {
-		var originalSpeed = this.previousVelocity.distance();
-		var newDir = new Vector(collisionObject.previousVelocity.x, collisionObject.previousVelocity.y);
-		newDir.normalize();
+		if (this.pointType == POINT_TYPE_CANNONBALL && collisionObject.pointType == POINT_TYPE_CANNONBALL) {
+			var originalSpeed = this.previousVelocity.distance();
+			var newDir = new Vector(collisionObject.previousVelocity.x, collisionObject.previousVelocity.y);
+			newDir.normalize();
 
-		newDir.x *= originalSpeed;
-		newDir.y *= originalSpeed;
+			newDir.x *= originalSpeed;
+			newDir.y *= originalSpeed;
 
-		this.velocity = newDir;
+			this.velocity = newDir;
+		}
+		else if (this.pointType == POINT_TYPE_STAR && collisionObject.pointType == POINT_TYPE_CANNONBALL) {
+			//we are a STAR and was hit by a cannonball
+			this.capture();
+		}
 	}
 	else if (collisionObject.collisionType == COLLISION_TYPE_POLYGON) {
 		var originalSpeed = this.previousVelocity.distance();

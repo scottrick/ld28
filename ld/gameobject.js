@@ -2,6 +2,7 @@ var COLLISION_TYPE_UNKNOWN = 0;
 var COLLISION_TYPE_POINT = 1;
 var COLLISION_TYPE_CIRCLE = 2;
 var COLLISION_TYPE_POLYGON = 3;
+var COLLISION_TYPE_NONE = 4;
 
 function GameObject() {
 	this.isDead = false;

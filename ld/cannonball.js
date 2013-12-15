@@ -4,6 +4,8 @@ Cannonball.prototype.constructor = PointObject;
 function Cannonball(position, velocity) {
 	PointObject.call(this, position, velocity, 8);
 
+	this.pointType = POINT_TYPE_CANNONBALL;
+
 	this.life = Math.random() * 9;
 }
 
