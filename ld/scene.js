@@ -1,12 +1,7 @@
 function Scene(name) {
     this.name = name;
 
-    this.objects = [];
-    this.stars = [];
-
-    this.gameScale = 24; //default game scale for now
-
-    this.dumpTimer = 0; //debug dump timer;
+    this.reset();
 }
 
 Scene.prototype.update = function(deltaTime) {
@@ -114,5 +109,14 @@ Scene.prototype.loadData = function(data) {
 				break;
 		}
 	}
+}
+
+Scene.prototype.reset = function() {
+    this.objects = [];
+    this.stars = [];
+
+    this.gameScale = 24; //default game scale for now
+
+    this.dumpTimer = 0; //debug dump timer;
 }
 

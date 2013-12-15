@@ -6,37 +6,10 @@ var STATE_HELP = 3;
 var STATE_RETRY = 4;
 
 function GameScene(name, data) {
-	Scene.call(this, name);
-
 	this.DEBUG_DRAW = false;
+	this.levelData = data;
 
-	this.state = STATE_GAME;
-
-	//setup the buckets
-	{
-		this.buckets = [];
-
-		var NUM_BUCKETS_X = 20;
-		var NUM_BUCKETS_Y = 15;
-		var BUCKET_WIDTH = gameWidth / NUM_BUCKETS_X;
-		var BUCKET_HEIGHT = gameHeight / NUM_BUCKETS_Y;
-
-		for (var x = 0; x < NUM_BUCKETS_X; x++) {
-			for (var y = 0; y < NUM_BUCKETS_Y; y++) {
-				var bucket = new Bucket(new Vector(x * BUCKET_WIDTH, y * BUCKET_HEIGHT), new Vector(BUCKET_WIDTH, BUCKET_HEIGHT));
-				this.buckets.push(bucket);
-			}
-		}
-	}
-
-	this.cannonballs = [];
-
-	this.cannon = new Cannon();
-	this.addObject(this.cannon);
-
-	this.loadData(data);
-
-	this.setupBoundaries();
+	Scene.call(this, name);
 }
 
 GameScene.prototype.update = function(deltaTime, scene) {
@@ -373,7 +346,7 @@ GameScene.prototype.handleKeyUp = function(key) {
 
 	if (this.state == STATE_RETRY) {
 		if (key == 32) {  //spacebar
-
+			this.reset();
 		}
 
 		return;
@@ -421,6 +394,37 @@ GameScene.prototype.setupBoundaries = function() {
 	var bottomBoundary = new RectangleObject(new Vector(0, 600), new Vector(800, 10), null, null);
 	bottomBoundary.shouldDraw = false;
 	this.addObject(bottomBoundary);
+}
 
+GameScene.prototype.reset = function() {
+	Scene.prototype.reset.call(this);
+
+	this.state = STATE_GAME;
+
+	//setup the buckets
+	{
+		this.buckets = [];
+
+		var NUM_BUCKETS_X = 20;
+		var NUM_BUCKETS_Y = 15;
+		var BUCKET_WIDTH = gameWidth / NUM_BUCKETS_X;
+		var BUCKET_HEIGHT = gameHeight / NUM_BUCKETS_Y;
+
+		for (var x = 0; x < NUM_BUCKETS_X; x++) {
+			for (var y = 0; y < NUM_BUCKETS_Y; y++) {
+				var bucket = new Bucket(new Vector(x * BUCKET_WIDTH, y * BUCKET_HEIGHT), new Vector(BUCKET_WIDTH, BUCKET_HEIGHT));
+				this.buckets.push(bucket);
+			}
+		}
+	}
+
+	this.cannonballs = [];
+
+	this.cannon = new Cannon();
+	this.addObject(this.cannon);
+
+	this.loadData(this.levelData);
+
+	this.setupBoundaries();
 }
 
