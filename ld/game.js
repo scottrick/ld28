@@ -116,19 +116,21 @@ Game.handleKeyUp = function(key) {
 var theImages = new Images(document);
 
 //setup the initial game scene
-Game.scene = new GameScene("TestScene");
+Game.scene = new SplashScene();
 
-for (var x = 1; x < 39; x++) {
-	for (var y = 1; y < 29; y++) {
-		var star = new Star(new Vector(10 + x * 20, 10 + y * 20));
-		Game.scene.addObject(star);
-	}
-}
 
-for (var i = 0; i < 5; i++) {
-	var cannonball = new Cannonball(new Vector(50 + i * 120, 580 - i * 2), new Vector((Math.random() - 0.5) * 200, - 100 + (Math.random() - 0.5) * 200));
-	Game.scene.addObject(cannonball);
-}
+// var spacing = 24;
+// for (var x = 0; x < 33; x++) {
+// 	for (var y = 0; y < 25; y++) {
+// 		var star = new Star(new Vector(16 + x * spacing, 12 + y * spacing));
+// 		Game.scene.addObject(star);
+// 	}
+// }
+
+// for (var i = 0; i < 5; i++) {
+// 	var cannonball = new Cannonball(new Vector(50 + i * 120, 580 - i * 2), new Vector((Math.random() - 0.5) * 200, - 100 + (Math.random() - 0.5) * 200));
+// 	Game.scene.addObject(cannonball);
+// }
 
 // var star = new Star(new Vector(400, 300));
 // Game.scene.addObject(star);
