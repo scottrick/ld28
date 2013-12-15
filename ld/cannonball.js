@@ -7,11 +7,11 @@ function Cannonball(position, velocity) {
 	this.pointType = POINT_TYPE_CANNONBALL;
 
 	this.life = Math.random() * 9;
-}
+};
 
 Cannonball.prototype.getImage = function() {
 	return theImages.getCannonball();
-}
+};
 
 Cannonball.prototype.update = function(deltaTime, scene) {
 	PointObject.prototype.update.call(this, deltaTime);

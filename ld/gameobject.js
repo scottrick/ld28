@@ -19,3 +19,6 @@ GameObject.prototype.draw = function(context) {
 
 };
 
+GameObject.prototype.onDeath = function() {
+
+}

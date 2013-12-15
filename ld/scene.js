@@ -18,6 +18,7 @@ Scene.prototype.update = function(deltaTime) {
 
 	for (var i = 0; i < deadObjects.length; i++) {
 		this.removeObject(deadObjects[i]);
+		deadObjects[i].onDeath();
 	}
 
 	this.dumpTimer += deltaTime;

@@ -82,7 +82,7 @@ PointObject.prototype.draw = function(context) {
 //Specific point objects should override this with the image they want to use
 PointObject.prototype.getImage = function() {
 	return null;
-}
+};
 
 PointObject.prototype.collide = function(collisionObject, collisionPoint, collisionVector) {
 	if (collisionObject == this.lastCollisionObject) {
@@ -139,6 +139,6 @@ PointObject.prototype.collide = function(collisionObject, collisionPoint, collis
 
 		this.velocity = new Vector(result.x * originalSpeed, result.y * originalSpeed);
 	}
-}
+};
 
 

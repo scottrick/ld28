@@ -73,6 +73,10 @@ GameScene.prototype.checkCollisions = function() {
 }
 
 GameScene.prototype.updateBucket = function(object) {
+	if (object.collisionType == COLLISION_TYPE_NONE) {
+		return;
+	}
+	
 	this.removeFromBuckets(object);
 
 	for (var i = 0; i < this.buckets.length; i++) {

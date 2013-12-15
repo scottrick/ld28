@@ -12,7 +12,7 @@ function Star(position) {
 	this.rotationMax = 15;
 	this.starRotationSpeed = 15 + Math.random() * 10;
 	this.rotation = Math.random() * this.rotationMax * 2 - this.rotationMax;
-}
+};
 
 Star.prototype.update = function(deltaTime, scene) {
 	PointObject.prototype.update.call(this, deltaTime, scene);
@@ -34,16 +34,39 @@ Star.prototype.update = function(deltaTime, scene) {
 			this.starRotationSpeed = -this.starRotationSpeed;
 		}
 	}
-}
+};
 
 Star.prototype.getImage = function() {
 	return theImages.getStar();
-}
+};
+
+Star.prototype.onDeath = function() {
+
+};
 
 Star.prototype.capture = function() {
 	this.expireSpeed = this.radius;
 	this.expiring = true;
 	this.collisionType = COLLISION_TYPE_NONE;
+
+	this.makeSparks();
+};
+
+Star.prototype.makeSparks = function() {
+	var numSparks = 10 + Math.random(10);
+
+	for (var i = 0; i < numSparks; i++) {
+		var v = Math.random() * 10 + 50;
+		var angle = Math.random() * 360;
+
+		var x = Math.cos(Math.PI * angle / 180) * v;
+		var y = Math.sin(Math.PI * angle / 180) * v;
+
+		var life = 0.3 + Math.random() * 0.3;
+		var spark = new Spark(this.position.copy(), new Vector(x, y), life);
+
+		Game.scene.addObject(spark);
+	}	
 }
 
 

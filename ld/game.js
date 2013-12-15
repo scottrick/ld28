@@ -118,15 +118,22 @@ var theImages = new Images(document);
 //setup the initial game scene
 Game.scene = new GameScene("TestScene");
 
-for (var i = 0; i < 39; i++) {
-	var star = new Star(new Vector(20 + i * 20, 50));
-	Game.scene.addObject(star);
+for (var x = 1; x < 39; x++) {
+	for (var y = 1; y < 29; y++) {
+		var star = new Star(new Vector(10 + x * 20, 10 + y * 20));
+		Game.scene.addObject(star);
+	}
 }
 
-for (var i = 0; i < 10; i++) {
-	var cannonball = new Cannonball(new Vector(10 + i * 60, 580 - i * 2), new Vector(100 + (Math.random() - 0.5) * 200, - 100 + (Math.random() - 0.5) * 200));
+for (var i = 0; i < 5; i++) {
+	var cannonball = new Cannonball(new Vector(50 + i * 120, 580 - i * 2), new Vector((Math.random() - 0.5) * 200, - 100 + (Math.random() - 0.5) * 200));
 	Game.scene.addObject(cannonball);
 }
+
+// var star = new Star(new Vector(400, 300));
+// Game.scene.addObject(star);
+// star.capture();
+
 
 // for (var i = 0; i < 8; i++) {
 // 	var cannonball = new Cannonball(new Vector(i * 100, i * 2), new Vector((Math.random() - 0.5) * 50, 50 + (Math.random() - 0.5) * - 40));
@@ -153,16 +160,16 @@ for (var i = 0; i < 10; i++) {
 // 	Game.scene.addObject(testPolygon1);
 // }
 
-{
-	var points = [
-				new Vector(400, 200), 
-				new Vector(500, 300), 
-				new Vector(400, 400), 
-				new Vector(300, 300)];
+// {
+// 	var points = [
+// 				new Vector(400, 200), 
+// 				new Vector(500, 300), 
+// 				new Vector(400, 400), 
+// 				new Vector(300, 300)];
 
-	var testPolygon1 = new PolygonObject(points, "#00f", "#f00");
-	Game.scene.addObject(testPolygon1);
-}
+// 	var testPolygon1 = new PolygonObject(points, "#00f", "#f00");
+// 	Game.scene.addObject(testPolygon1);
+// }
 
 // {
 // 	var points = [];
