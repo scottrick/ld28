@@ -15,11 +15,6 @@ function VictoryScene() {
 
 	this.textAlpha = 1;
 	this.textAlphaFadeSpeed = 2; //in seconds
-
-	this.stars = [];
-	for (var i = 0; i < this.objects.length; i++) {
-		this.stars.push(this.objects[i]);
-	}
 }
 
 VictoryScene.prototype.update = function(deltaTime, scene) {

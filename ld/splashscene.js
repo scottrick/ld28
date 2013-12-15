@@ -18,11 +18,6 @@ function SplashScene() {
 
 	this.textAlpha = 1;
 	this.textAlphaFadeSpeed = 1; //in seconds
-
-	this.stars = [];
-	for (var i = 0; i < this.objects.length; i++) {
-		this.stars.push(this.objects[i]);
-	}
 }
 
 SplashScene.prototype.update = function(deltaTime, scene) {
@@ -89,6 +84,10 @@ SplashScene.prototype.draw = function(context) {
 	}
 
 	context.restore();
+}
+
+SplashScene.prototype.handleStarsGone = function() {
+	Scene.prototype.handleStarsGone.calll(this);
 }
 
 SplashScene.prototype.handleKeyDown = function(key) {

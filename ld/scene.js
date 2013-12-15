@@ -1,10 +1,12 @@
 function Scene(name) {
     this.name = name;
-    this.objects = new Array();
 
-    this.dumpTimer = 0;
+    this.objects = [];
+    this.stars = [];
 
-    this.gameScale = 24;
+    this.gameScale = 24; //default game scale for now
+
+    this.dumpTimer = 0; //debug dump timer;
 }
 
 Scene.prototype.update = function(deltaTime) {
@@ -42,6 +44,10 @@ Scene.prototype.draw = function(context) {
 
 Scene.prototype.addObject = function(object) {
 	this.objects.push(object);
+
+	if (object.pointType == POINT_TYPE_STAR) {
+		this.stars.push(object);
+	}
 }
 
 Scene.prototype.removeObject = function(object) {
@@ -50,11 +56,26 @@ Scene.prototype.removeObject = function(object) {
 	if (index >= 0) {
     	this.objects.splice(index, 1);
 	}
+
+	var starIndex = this.stars.indexOf(object);
+
+	if (starIndex >= 0) {
+		//was a star, so remove it from the star list
+		this.stars.splice(starIndex, 1);
+
+		if (this.stars.length <= 0) {
+			this.handleStarsGone();
+		}
+	}
 }
 
 Scene.prototype.getInfo = function() {
 	console.log("Scene [" + this.name + "] has " + this.objects.length + " objects.");;
 };
+
+Scene.prototype.handleStarsGone = function() {
+
+}
 
 Scene.prototype.handleKeyDown = function(key) {
 
