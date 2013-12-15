@@ -1,12 +1,16 @@
 GameScene.prototype = new Scene();
 GameScene.prototype.constructor = Scene;
 
+var STATE_GAME = 2;
+var STATE_HELP = 3;
+var STATE_RETRY = 4;
+
 function GameScene(name, data) {
 	Scene.call(this, name);
 
 	this.DEBUG_DRAW = false;
 
-	this.shouldShowHelp = false;
+	this.state = STATE_GAME;
 
 	//setup the buckets
 	{
@@ -25,6 +29,8 @@ function GameScene(name, data) {
 		}
 	}
 
+	this.cannonballs = [];
+
 	this.cannon = new Cannon();
 	this.addObject(this.cannon);
 
@@ -36,7 +42,7 @@ function GameScene(name, data) {
 GameScene.prototype.update = function(deltaTime, scene) {
 	Scene.prototype.update.call(this, deltaTime, scene);
 
-	if (!this.shouldShowHelp) {
+	if (this.state == STATE_GAME) {
 		//rotate cannon as needed
 		if (keysDown[65] || keysDown[90] || keysDown[37]) {
 			//rotate left
@@ -47,16 +53,45 @@ GameScene.prototype.update = function(deltaTime, scene) {
 			//rotate right
 			this.cannon.rotateRight(deltaTime);
 		}
+
+		this.checkLevelOver();
 	}
 
 	this.checkCollisions();
 }
 
+GameScene.prototype.checkLevelOver = function() {
+	//level is over when there are no shots left in the cannon, and all cannon balls are dead
+	if (this.cannon.shots > 0) {
+		return;
+	}
+
+	for (var i = 0; i < this.cannonballs.length; i++) {
+		var cannonball = this.cannonballs[i];
+
+		if (cannonball.velocity != null) {
+			return;
+		}
+	}
+
+	//there are no shots let, and all the cannonballs are dead!
+	this.state = STATE_RETRY;
+}
+
 GameScene.prototype.draw = function(context) {
 	Scene.prototype.draw.call(this, context);
 
-	if (this.shouldShowHelp) {
-		this.drawHelp(context);
+	switch (this.state) {
+		case STATE_HELP:
+			this.drawHelp(context);
+			break;
+
+		case STATE_RETRY:	
+			this.drawRetry(context);
+			break;
+
+		default:
+			break;	
 	}
 
 	if (!this.DEBUG_DRAW) {
@@ -240,11 +275,18 @@ GameScene.prototype.removeObject = function(object) {
 }
 
 GameScene.prototype.showHelp = function() {
-	this.shouldShowHelp = true;
+	if (this.state == STATE_GAME) {
+		this.state = STATE_HELP;
+	}
 }
 
 GameScene.prototype.toggleHelp = function() {
-	this.shouldShowHelp = !this.shouldShowHelp;
+	if (this.state == STATE_GAME) {
+		this.state = STATE_HELP;
+	}
+	else if (this.state == STATE_HELP) {
+		this.state = STATE_GAME;
+	}
 }
 
 GameScene.prototype.drawHelp = function(context) {
@@ -286,20 +328,52 @@ GameScene.prototype.drawHelp = function(context) {
 	context.restore();
 }
 
+GameScene.prototype.drawRetry = function(context) {
+	context.save();
+
+	context.lineWidth = 1.5;
+	context.globalAlpha = 0.8;
+	context.fillStyle = "#000";
+	context.strokeStyle = "0f0";
+	context.fillRect(100, 100, 600, 400);
+
+	context.globalAlpha = 1;
+	context.strokeRect(100, 100, 600, 400);
+
+	var startY = 124;
+	var spacingY = 24;
+	context.font = "20px Courier New";
+	context.fillStyle = "#0f0"
+
+	startY += spacingY * 2;
+
+	context.textAlign = "center"
+	context.fillText("You didn't get all the stars!", 400, startY);
+
+	context.fillText("[spacebar to try again]", 400, 500 - 16 - spacingY);
+	startY += spacingY;
+
+	context.restore();
+}
+
 GameScene.prototype.handleKeyDown = function(key) {
 	Scene.prototype.handleKeyDown.call(this, key);
-
-	if (this.shouldShowHelp) {
-		return;
-	}
 }
 
 GameScene.prototype.handleKeyUp = function(key) {
 	Scene.prototype.handleKeyUp.call(this, key);
 
-	if (this.shouldShowHelp) {
+	if (this.state == STATE_HELP) {
 		if (key == 72 || key == 32) {
 			this.toggleHelp();
+		}
+
+		return;
+	}
+
+	if (this.state == STATE_RETRY) {
+		if (key == 32) {  //spacebar
+
 		}
 
 		return;
@@ -308,7 +382,10 @@ GameScene.prototype.handleKeyUp = function(key) {
 	switch (key) {
 		case 32:  //spacebar
 			//fire the cannon!
-			this.cannon.fire(this);
+			var cannonball = this.cannon.fire(this);
+			if (cannonball != null) {
+				this.cannonballs.push(cannonball);
+			}
 			break;
 
 		case 72:  //h

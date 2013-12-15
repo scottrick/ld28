@@ -5,8 +5,10 @@ function Cannonball(position, velocity, radius) {
 	PointObject.call(this, position, velocity, radius);
 
 	this.pointType = POINT_TYPE_CANNONBALL;
+	this.removeWhenDead = false;
 
-	this.life = Math.random() * 9;
+	this.life = 4; //seconds before it starts slowing down
+	this.decaySpeed = 100;
 };
 
 Cannonball.prototype.getImage = function() {
@@ -16,8 +18,26 @@ Cannonball.prototype.getImage = function() {
 Cannonball.prototype.update = function(deltaTime, scene) {
 	PointObject.prototype.update.call(this, deltaTime, scene);
 
-	// this.life -= deltaTime;
-	if (this.life < 0 && !this.isDead) {
-		this.isDead = true;
+	if (this.life > 0) {
+		this.life -= deltaTime;
+	}
+	else {
+		//decaying
+		if (this.velocity == null) {
+			return;
+		}
+
+		var speed = this.velocity.distance();
+		speed -= this.decaySpeed * deltaTime;
+		if (speed < 0) {
+			speed = 0;
+			this.velocity = null;
+		}
+		else {
+			this.velocity.normalize();
+
+			this.velocity.x *= speed;
+			this.velocity.y *= speed;
+		}
 	}
 };

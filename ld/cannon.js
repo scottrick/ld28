@@ -47,6 +47,8 @@ Cannon.prototype.fire = function(scene) {
         this.shots--;
 
         this.makeSmoke(smokeStart, scene, 48, 16);
+
+        return cannonball; //return the cannonball we fired
     }
     else {
         //out of ammunition, misfire!

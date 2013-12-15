@@ -6,6 +6,7 @@ var COLLISION_TYPE_NONE = 4;
 
 function GameObject() {
 	this.isDead = false;
+	this.removeWhenDead = true;
 	this.shouldDraw = true;
 	this.didMove = false;
 	this.collisionType = COLLISION_TYPE_UNKNOWN;

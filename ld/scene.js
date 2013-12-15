@@ -15,7 +15,7 @@ Scene.prototype.update = function(deltaTime) {
 	for (var i = 0; i < this.objects.length; i++) {
 		this.objects[i].update(deltaTime, this);
 
-		if (this.objects[i].isDead) {
+		if (this.objects[i].isDead && this.objects[i].removeWhenDead) {
 			deadObjects.push(this.objects[i]);
 		}
 	}
