@@ -44,14 +44,16 @@ Star.prototype.onDeath = function() {
 
 };
 
-Star.prototype.explode = function() {
+Star.prototype.explode = function(shouldPlaySound) {
 	this.expireSpeed = this.radius;
 	this.expiring = true;
 	this.collisionType = COLLISION_TYPE_NONE;
 
 	this.makeSparks();
 
-	theSounds.getNextStarSound().play();
+	if (shouldPlaySound) {
+		theSounds.getNextStarSound().play();
+	}
 };
 
 Star.prototype.makeSparks = function() {

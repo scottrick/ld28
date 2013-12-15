@@ -34,7 +34,7 @@ VictoryScene.prototype.update = function(deltaTime, scene) {
 				}
 
 				var index = Math.floor(Math.random() * this.stars.length);
-				this.stars[index].explode();
+				this.stars[index].explode(false);
 		    	this.stars.splice(index, 1);
 			}
 		}

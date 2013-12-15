@@ -109,7 +109,7 @@ PointObject.prototype.collide = function(collisionObject, collisionPoint, collis
 		}
 		else if (this.pointType == POINT_TYPE_STAR && collisionObject.pointType == POINT_TYPE_CANNONBALL) {
 			//we are a STAR and was hit by a cannonball
-			this.explode();
+			this.explode(true);
 		}
 	}
 	else if (collisionObject.collisionType == COLLISION_TYPE_POLYGON) {

@@ -38,7 +38,7 @@ SplashScene.prototype.update = function(deltaTime, scene) {
 				}
 
 				var index = Math.floor(Math.random() * this.stars.length);
-				this.stars[index].explode();
+				this.stars[index].explode(false);
 		    	this.stars.splice(index, 1);
 			}
 		}
@@ -100,6 +100,7 @@ SplashScene.prototype.handleKeyUp = function(key) {
 	switch (key) {
 		case 32: 	//spacebar 32
 			this.starting = true;
+			theSounds.getNextStarSound().play();
 			break;
 	}
 }
