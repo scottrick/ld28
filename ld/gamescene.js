@@ -23,6 +23,9 @@ function GameScene(name, data) {
 		}
 	}
 
+	this.cannon = new Cannon();
+	this.addObject(this.cannon);
+
 	this.loadData(data);
 
 	var boundaries = new RectangleObject(new Vector(0, 0), new Vector(800, 600), null, null);
@@ -221,15 +224,38 @@ GameScene.prototype.removeObject = function(object) {
 
 GameScene.prototype.handleKeyDown = function(key) {
 	Scene.prototype.handleKeyDown.call(this, key);
+
+	switch (key) {
+		case 65:  //a
+		case 90:  //z
+		case 37: //left arrow
+			//rotate left
+			this.cannon.rotateLeft();
+			break;
+
+		case 68:  //d
+		case 88:  //x
+		case 39:  //right arrow
+			//rotate right
+			this.cannon.rotateRight();
+			break;
+	}
 }
 
 GameScene.prototype.handleKeyUp = function(key) {
 	Scene.prototype.handleKeyUp.call(this, key);
 
 	switch (key) {
-		case 32: 	//spacebar 32
-			Game.nextLevel(); //hack for now
+		case 32: 	//spacebar
+			//fire the cannon!
+			this.cannon.fire(this);
 			break;
 	}
+}
+
+GameScene.prototype.handleStarsGone = function() {
+	Scene.prototype.handleStarsGone.call(this);
+
+	Game.nextLevel();
 }
 

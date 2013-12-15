@@ -1,8 +1,8 @@
 Cannonball.prototype = new PointObject();
 Cannonball.prototype.constructor = PointObject;
 
-function Cannonball(position, velocity) {
-	PointObject.call(this, position, velocity, 10);
+function Cannonball(position, velocity, radius) {
+	PointObject.call(this, position, velocity, radius);
 
 	this.pointType = POINT_TYPE_CANNONBALL;
 
@@ -14,7 +14,7 @@ Cannonball.prototype.getImage = function() {
 };
 
 Cannonball.prototype.update = function(deltaTime, scene) {
-	PointObject.prototype.update.call(this, deltaTime);
+	PointObject.prototype.update.call(this, deltaTime, scene);
 
 	// this.life -= deltaTime;
 	if (this.life < 0 && !this.isDead) {

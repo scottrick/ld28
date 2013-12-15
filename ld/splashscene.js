@@ -87,7 +87,7 @@ SplashScene.prototype.draw = function(context) {
 }
 
 SplashScene.prototype.handleStarsGone = function() {
-	Scene.prototype.handleStarsGone.calll(this);
+	Scene.prototype.handleStarsGone.call(this);
 }
 
 SplashScene.prototype.handleKeyDown = function(key) {

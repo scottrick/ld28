@@ -155,10 +155,6 @@ Game.nextLevel = function() {
 // 	}
 // }
 
-// for (var i = 0; i < 5; i++) {
-// 	var cannonball = new Cannonball(new Vector(50 + i * 120, 580 - i * 2), new Vector((Math.random() - 0.5) * 200, - 100 + (Math.random() - 0.5) * 200));
-// 	Game.scene.addObject(cannonball);
-// }
 
 // var star = new Star(new Vector(400, 300));
 // Game.scene.addObject(star);
