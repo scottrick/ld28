@@ -142,3 +142,7 @@ Scene.prototype.reset = function() {
     this.dumpTimer = 0; //debug dump timer;
 }
 
+Scene.prototype.getMusic = function() {
+	return theSounds.getTitleTrack();
+}
+

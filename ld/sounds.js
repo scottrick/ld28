@@ -29,6 +29,8 @@ function Sounds(document) {
 	this.bounceSounds.push(document.getElementById("soundBounce3"));
 	this.bounceSounds.push(document.getElementById("soundBounce4"));
 	this.bounceSoundsIndex = 0;
+
+	this.titleTrack = document.getElementById("titleTrack");
 }
 
 Sounds.prototype.getNextStarSound = function() {
@@ -54,3 +56,7 @@ Sounds.prototype.getNextBounceSound = function() {
 	this.bounceSoundsIndex = (this.bounceSoundsIndex + 1) % this.bounceSounds.length;
 	return this.bounceSounds[currentIndex];
 };
+
+Sounds.prototype.getTitleTrack = function() {
+	return this.titleTrack;
+}

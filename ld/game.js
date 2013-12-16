@@ -37,6 +37,8 @@ Game.slowMotionFactor = 5.0;
 Game.time = 0.0;
 Game.scene = null;
 Game.levels = [];
+Game.currentMusic = null;
+Game.previousMusic = null;
 
 Game.togglePause = function() {
 	this.paused = !this.paused;
@@ -138,18 +140,57 @@ Game.nextLevel = function() {
 	if (currentLevelIndex == null) {
 		//start them on the first level
 		this.scene = this.levels[0];
+		this.setMusic(this.scene.getMusic());
 	}
 	else {
 		currentLevelIndex++;
 
 		if (currentLevelIndex < this.levels.length) {
 			this.scene = this.levels[currentLevelIndex];
+			this.setMusic(this.scene.getMusic());
 		}
 		else {
 			//were on the last level!  Game over here...
 			this.reset();
 		}
 	}
+}
+
+Game.setMusic = function(music) {
+	if (Game.currentMusic == music) {
+		return;
+	}
+
+	if (Game.currentMusic != null) {
+		var fadeOutMusic = Game.currentMusic;
+		var interval = 50
+
+		var fadeout = setInterval(
+		  	function() {
+			    var newVolume = fadeOutMusic.volume - 0.06;
+			    if (newVolume <= 0) {
+			    	newVolume = 0;
+			    	fadeOutMusic.pause();
+			    	fadeOutMusic.currentTime = 0;
+					clearInterval(fadeout);
+			    }
+
+				fadeOutMusic.volume = newVolume;
+		  }, 
+		  interval);
+	}
+
+	Game.currentMusic = music;
+	Game.currentMusic.volume = 0.8;
+
+	Game.currentMusic.addEventListener('ended', function() {
+		if (Game.currentMusic == this) {
+		    this.currentTime = 0;
+		    this.play();
+		}
+	}, false);
+
+	Game.currentMusic.play();
 }
 
 Game.reset();

@@ -105,3 +105,7 @@ SplashScene.prototype.handleKeyUp = function(key) {
 	}
 }
 
+SplashScene.prototype.getMusic = function() {
+	return theSounds.getTitleTrack();
+}
+

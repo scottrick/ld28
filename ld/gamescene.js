@@ -367,7 +367,7 @@ GameScene.prototype.handleKeyDown = function(key) {
 
 GameScene.prototype.handleKeyUp = function(key) {
 	Scene.prototype.handleKeyUp.call(this, key);
-	
+
 	if (this.debugOptions) {
 		if (key == 80) {
 			//hack
@@ -487,5 +487,9 @@ GameScene.prototype.reset = function() {
 	}
 
 	this.setupBoundaries();
+}
+
+GameScene.prototype.getMusic = function() {
+	return Scene.prototype.getMusic.call(this);
 }
 
