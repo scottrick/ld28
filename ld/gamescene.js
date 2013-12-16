@@ -298,8 +298,11 @@ GameScene.prototype.drawHelp = function(context) {
 	context.fillText("Use spacebar to fire the cannon.", 112, startY);
 	startY += spacingY * 2;
 
-	context.fillText("The 'h' key will toggle this help menu.", 112, startY);
-	startY += spacingY * 3;
+	context.fillText("The 'H' key will toggle this help menu.", 112, startY);
+	startY += spacingY;
+
+	context.fillText("The 'Q' key will take you back to the main menu.", 112, startY);
+	startY += spacingY;
 
 	context.fillText("Good luck!", 112, 500 - 16);
 	startY += spacingY;
@@ -374,12 +377,16 @@ GameScene.prototype.handleKeyUp = function(key) {
 			Game.nextLevel();
 		}
 
-		if (key == 82) {
+		if (key == 82) {  //r
 			this.reset();
 		}
 	}
 
 	if (this.state == STATE_HELP) {
+		if (key == 81) { //q
+			Game.reset();
+		}
+
 		if (key == 72 || key == 32) {
 			this.toggleHelp();
 		}
