@@ -143,6 +143,6 @@ Scene.prototype.reset = function() {
 }
 
 Scene.prototype.getMusic = function() {
-	return theSounds.getTitleTrack();
+	return theSounds.getGameTrack();
 }
 

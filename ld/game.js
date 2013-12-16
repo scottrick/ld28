@@ -181,7 +181,6 @@ Game.setMusic = function(music) {
 	}
 
 	Game.currentMusic = music;
-	Game.currentMusic.volume = 0.8;
 
 	Game.currentMusic.addEventListener('ended', function() {
 		if (Game.currentMusic == this) {

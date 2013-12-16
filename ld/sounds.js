@@ -31,6 +31,7 @@ function Sounds(document) {
 	this.bounceSoundsIndex = 0;
 
 	this.titleTrack = document.getElementById("titleTrack");
+	this.gameTrack = document.getElementById("gameTrack");
 }
 
 Sounds.prototype.getNextStarSound = function() {
@@ -58,5 +59,11 @@ Sounds.prototype.getNextBounceSound = function() {
 };
 
 Sounds.prototype.getTitleTrack = function() {
+	this.titleTrack.volume = 0.8;
 	return this.titleTrack;
+}
+
+Sounds.prototype.getGameTrack = function() {
+	this.gameTrack.volume = 0.3;
+	return this.gameTrack;
 }

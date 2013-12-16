@@ -93,8 +93,14 @@ VictoryScene.prototype.handleKeyUp = function(key) {
 
 	switch (key) {
 		case 32: 	//spacebar 32
+
 			this.ending = true;
 			break;
 	}
 }
+
+VictoryScene.prototype.getMusic = function() {
+	return theSounds.getTitleTrack();
+}
+
 
