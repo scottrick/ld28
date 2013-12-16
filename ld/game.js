@@ -131,6 +131,9 @@ Game.setupLevels = function() {
 	this.levels.push(new GameScene("LevelTwo", levelTwoData, levelTwoPolys));
 	this.levels.push(new GameScene("LevelThree", levelThreeData, levelThreePolys));
 	this.levels.push(new GameScene("LevelFour", levelFourData, levelFourPolys));
+	this.levels.push(new GameScene("LevelFive", levelFiveData, levelFivePolys));
+	this.levels.push(new GameScene("LevelSix", levelSixData, levelSixPolys));
+	this.levels.push(new GameScene("LevelTen", levelTenData, levelTenPolys));
 	this.levels.push(new VictoryScene());
 }
 

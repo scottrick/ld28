@@ -103,3 +103,7 @@ Cannon.prototype.rotateRight = function(deltaTime) {
     }
 }
 
+Cannon.prototype.rearm = function() {
+    this.shots = 1; // You only get one!
+}
+

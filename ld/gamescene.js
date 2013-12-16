@@ -304,6 +304,9 @@ GameScene.prototype.drawHelp = function(context) {
 	context.fillText("The 'Q' key will take you back to the main menu.", 112, startY);
 	startY += spacingY;
 
+	context.fillText("The 'R' key will reset the current level.", 112, startY);
+	startY += spacingY;
+
 	context.fillText("Good luck!", 112, 500 - 16);
 	startY += spacingY;
 
@@ -371,14 +374,14 @@ GameScene.prototype.handleKeyDown = function(key) {
 GameScene.prototype.handleKeyUp = function(key) {
 	Scene.prototype.handleKeyUp.call(this, key);
 
+	if (key == 82) {  //r
+		this.reset();
+	}
+
 	if (this.debugOptions) {
 		if (key == 80) {
 			//hack
 			Game.nextLevel();
-		}
-
-		if (key == 82) {  //r
-			this.reset();
 		}
 	}
 
@@ -482,7 +485,13 @@ GameScene.prototype.reset = function() {
 
 	this.cannonballs = [];
 
-	this.cannon = new Cannon();
+	if (this.cannon == null) {
+		this.cannon = new Cannon();
+	}
+	else {
+		this.cannon.rearm();
+	}
+
 	this.addObject(this.cannon);
 
 	if (this.levelData != null) {
